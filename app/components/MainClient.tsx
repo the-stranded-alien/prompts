@@ -42,6 +42,10 @@ export default function MainClient({ sections }: MainClientProps) {
   const [selection, setSelection] = useState<Selection | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const primarySections   = sections.filter((s) => s.primary);
+  const secondarySections = sections.filter((s) => !s.primary);
+  const activeIsSecondary = secondarySections.some((s) => s.id === activeSectionId);
+  const [moreOpen, setMoreOpen] = useState(activeIsSecondary);
 
   const activeSection = sections.find((s) => s.id === activeSectionId) ?? sections[0];
 
@@ -117,11 +121,12 @@ export default function MainClient({ sections }: MainClientProps) {
 
         {/* Section switcher */}
         <div className="flex-none px-3 py-2.5 border-b border-[--border]">
+          {/* Primary tabs */}
           <div
             className="flex gap-1 p-1 rounded-xl border border-[--border]"
             style={{ background: "var(--bg-elevated)" }}
           >
-            {sections.map((s) => {
+            {primarySections.map((s) => {
               const Icon = getIconByName(s.icon);
               const isActive = s.id === activeSectionId;
               const sectionCount = s.categories.reduce((sum, c) => sum + c.items.length, 0);
@@ -154,6 +159,58 @@ export default function MainClient({ sections }: MainClientProps) {
               );
             })}
           </div>
+
+          {/* Secondary sections — "More" collapsible */}
+          {secondarySections.length > 0 && (
+            <div className="mt-2">
+              <button
+                onClick={() => setMoreOpen((v) => !v)}
+                className="w-full flex items-center gap-1.5 px-2 py-1 rounded-lg text-[10px] font-bold
+                  uppercase tracking-widest text-[--text-muted] hover:text-[--text-secondary]
+                  hover:bg-[--bg-elevated] transition-all duration-150"
+              >
+                <span className={`transition-transform duration-200 ${moreOpen ? "rotate-90" : ""}`}>›</span>
+                More
+                <span className="ml-auto text-[9px] font-mono text-[--text-muted]">
+                  {secondarySections.length} sections
+                </span>
+              </button>
+
+              {moreOpen && (
+                <div className="mt-1 flex flex-col gap-0.5 animate-fade-slide">
+                  {secondarySections.map((s) => {
+                    const Icon = getIconByName(s.icon);
+                    const isActive = s.id === activeSectionId;
+                    const sectionCount = s.categories.reduce((sum, c) => sum + c.items.length, 0);
+                    return (
+                      <button
+                        key={s.id}
+                        onClick={() => handleSelectSection(s.id)}
+                        className={`flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-[11px] font-semibold
+                          transition-all duration-150 ${
+                          isActive
+                            ? "text-[--text-primary]"
+                            : "text-[--text-muted] hover:text-[--text-secondary] hover:bg-[--bg-elevated]"
+                        }`}
+                        style={isActive ? { background: "var(--bg-elevated)" } : {}}
+                      >
+                        <span style={{ color: isActive ? s.color : undefined }}>
+                          <Icon className="w-3.5 h-3.5 shrink-0" />
+                        </span>
+                        <span>{s.name}</span>
+                        <span
+                          className="ml-auto text-[9px] font-mono tabular-nums px-1 py-px rounded"
+                          style={{ background: `${s.color}14`, color: s.color }}
+                        >
+                          {sectionCount}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
         {/* Search */}
@@ -190,9 +247,9 @@ export default function MainClient({ sections }: MainClientProps) {
         </div>
 
         {/* Footer */}
-        <div className="flex-none px-4 pt-3 pb-4 border-t border-[--border]">
+        <div className="flex-none px-4 pt-2 pb-2 border-t border-[--border]">
           {/* Social links */}
-          <div className="grid grid-cols-2 gap-1.5 mb-3">
+          <div className="grid grid-cols-2 gap-1">
             {[
               { label: "GitHub",    href: "https://github.com/the-stranded-alien",      icon: "github" },
               { label: "LinkedIn",  href: "https://www.linkedin.com/in/sahilgupta1611", icon: "linkedin" },
@@ -200,7 +257,7 @@ export default function MainClient({ sections }: MainClientProps) {
               { label: "Blogs",     href: "https://blogs.guptasahil.in/",               icon: "pen" },
             ].map(({ label, href, icon }) => (
               <a key={label} href={href} target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[11px] font-medium
+                className="flex items-center gap-1.5 px-2 py-1 rounded-lg text-[11px] font-medium
                   text-[--text-muted] border border-[--border] transition-all
                   hover:text-[--text-primary] hover:border-[--border-hover] hover:bg-[--bg-elevated]"
               >

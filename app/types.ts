@@ -21,6 +21,7 @@ export interface Section {
   icon: string;
   color: string;
   description: string;
+  primary?: boolean;
   categories: Category[];
 }
 

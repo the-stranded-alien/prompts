@@ -5,7 +5,8 @@
       "name": "Prompts",
       "icon": "file-text",
       "color": "#818cf8",
-      "description": "LLM prompts for coding, writing, and AI systems",
+      "primary": true,
+      "description": "LLM prompts for coding, writing, data, and AI systems",
       "categories": [
         {
           "id": "coding",
@@ -33,6 +34,13 @@
               "description": "Systematic debugging and root cause analysis",
               "file": "coding/debug.md",
               "tags": ["debug", "troubleshoot"]
+            },
+            {
+              "id": "architecture-review",
+              "title": "Architecture Review",
+              "description": "Review system design for scalability, reliability, and security",
+              "file": "coding/architecture-review.md",
+              "tags": ["architecture", "design", "scalability"]
             }
           ]
         },
@@ -55,13 +63,42 @@
               "description": "Clear and structured technical documentation",
               "file": "writing/technical-doc.md",
               "tags": ["docs", "technical"]
+            },
+            {
+              "id": "email-drafter",
+              "title": "Email Drafter",
+              "description": "Draft professional emails for any context and tone",
+              "file": "writing/email-drafter.md",
+              "tags": ["email", "communication", "professional"]
+            }
+          ]
+        },
+        {
+          "id": "data",
+          "name": "Data",
+          "icon": "cpu",
+          "color": "#f472b6",
+          "items": [
+            {
+              "id": "data-analysis",
+              "title": "Data Analysis Assistant",
+              "description": "Analyse datasets and surface actionable insights",
+              "file": "data/data-analysis.md",
+              "tags": ["data", "analytics", "insights"]
+            },
+            {
+              "id": "sql-query",
+              "title": "SQL Query Generator",
+              "description": "Generate and optimise SQL queries with explanations",
+              "file": "data/sql-query.md",
+              "tags": ["sql", "database", "query"]
             }
           ]
         },
         {
           "id": "system",
           "name": "System Prompts",
-          "icon": "cpu",
+          "icon": "zap",
           "color": "#fb923c",
           "items": [
             {
@@ -79,6 +116,78 @@
               "tags": ["system", "agent", "coding"]
             }
           ]
+        },
+        {
+          "id": "career",
+          "name": "Career",
+          "icon": "pen",
+          "color": "#f59e0b",
+          "items": [
+            {
+              "id": "resume-review",
+              "title": "Resume Review",
+              "description": "Review and improve a resume for a specific role and company",
+              "file": "career/resume-review.md",
+              "tags": ["resume", "career", "job search"]
+            },
+            {
+              "id": "cover-letter",
+              "title": "Cover Letter Writer",
+              "description": "Write a personalised, non-generic cover letter that stands out",
+              "file": "career/cover-letter.md",
+              "tags": ["cover letter", "job application", "writing"]
+            },
+            {
+              "id": "job-description-analyser",
+              "title": "Job Description Analyser",
+              "description": "Decode a JD to find real requirements, fit gaps, and ATS keywords",
+              "file": "career/job-description-analyser.md",
+              "tags": ["job search", "jd", "ats", "keywords"]
+            },
+            {
+              "id": "interview-prep",
+              "title": "Interview Prep Coach",
+              "description": "Tailored questions, STAR answers, and strategy for any interview",
+              "file": "career/interview-prep.md",
+              "tags": ["interview", "preparation", "star", "behavioural"]
+            },
+            {
+              "id": "linkedin-optimise",
+              "title": "LinkedIn Optimiser",
+              "description": "Rewrite headline, about, and bullets to attract recruiter attention",
+              "file": "career/linkedin-optimise.md",
+              "tags": ["linkedin", "profile", "personal brand"]
+            },
+            {
+              "id": "cold-outreach",
+              "title": "Cold Outreach Writer",
+              "description": "Write genuine cold messages to recruiters and hiring managers",
+              "file": "career/cold-outreach.md",
+              "tags": ["networking", "cold email", "outreach", "linkedin"]
+            }
+          ]
+        },
+        {
+          "id": "ai-ops",
+          "name": "AI Ops",
+          "icon": "search",
+          "color": "#a78bfa",
+          "items": [
+            {
+              "id": "model-eval",
+              "title": "LLM Output Evaluator",
+              "description": "Score and critique model output against the original task",
+              "file": "ai-ops/model-eval.md",
+              "tags": ["eval", "llm", "quality"]
+            },
+            {
+              "id": "fine-tune-data",
+              "title": "Fine-Tuning Dataset Generator",
+              "description": "Generate high-quality JSONL training examples for fine-tuning",
+              "file": "ai-ops/fine-tune-data.md",
+              "tags": ["fine-tuning", "training data", "llm"]
+            }
+          ]
         }
       ]
     },
@@ -87,7 +196,8 @@
       "name": "Skills",
       "icon": "zap",
       "color": "#2dd4bf",
-      "description": "Reusable agent skills and workflows",
+      "primary": true,
+      "description": "Reusable agent skills and cognitive tools",
       "categories": [
         {
           "id": "research",
@@ -130,6 +240,163 @@
               "description": "Structured pull request review skill",
               "file": "coding/pr-review.md",
               "tags": ["pr", "review", "git"]
+            }
+          ]
+        },
+        {
+          "id": "planning",
+          "name": "Planning",
+          "icon": "cpu",
+          "color": "#fb923c",
+          "items": [
+            {
+              "id": "task-decompose",
+              "title": "Task Decomposition",
+              "description": "Break complex goals into executable plans with dependencies",
+              "file": "planning/task-decompose.md",
+              "tags": ["planning", "decomposition", "agent"]
+            },
+            {
+              "id": "chain-of-thought",
+              "title": "Chain-of-Thought",
+              "description": "Step-by-step reasoning framework for complex problems",
+              "file": "planning/chain-of-thought.md",
+              "tags": ["reasoning", "cot", "thinking"]
+            }
+          ]
+        },
+        {
+          "id": "tools",
+          "name": "Tool Use",
+          "icon": "zap",
+          "color": "#f472b6",
+          "items": [
+            {
+              "id": "tool-selector",
+              "title": "Tool Selector",
+              "description": "Choose and sequence the optimal tools for any task",
+              "file": "tools/tool-selector.md",
+              "tags": ["tools", "function calling", "agent"]
+            },
+            {
+              "id": "structured-output",
+              "title": "Structured Output",
+              "description": "Extract and validate structured JSON from unstructured text",
+              "file": "tools/structured-output.md",
+              "tags": ["json", "extraction", "schema"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "workflows",
+      "name": "Workflows",
+      "icon": "cpu",
+      "color": "#f472b6",
+      "description": "End-to-end agentic workflows and automation pipelines",
+      "categories": [
+        {
+          "id": "agentic",
+          "name": "Agentic",
+          "icon": "zap",
+          "color": "#f472b6",
+          "items": [
+            {
+              "id": "research-report",
+              "title": "Research Report",
+              "description": "Multi-agent workflow to produce a fully cited research report",
+              "file": "agentic/research-report.md",
+              "tags": ["research", "multi-agent", "report"]
+            },
+            {
+              "id": "code-feature",
+              "title": "Code Feature",
+              "description": "Spec → design → implement → test → review, end to end",
+              "file": "agentic/code-feature.md",
+              "tags": ["coding", "feature", "multi-agent"]
+            },
+            {
+              "id": "data-pipeline",
+              "title": "Data Pipeline",
+              "description": "Design, build, and validate a data pipeline end to end",
+              "file": "agentic/data-pipeline.md",
+              "tags": ["data", "pipeline", "etl"]
+            }
+          ]
+        },
+        {
+          "id": "automation",
+          "name": "Automation",
+          "icon": "code",
+          "color": "#a78bfa",
+          "items": [
+            {
+              "id": "daily-digest",
+              "title": "Daily Digest",
+              "description": "Compile a personalised daily briefing from multiple sources",
+              "file": "automation/daily-digest.md",
+              "tags": ["automation", "digest", "scheduling"]
+            },
+            {
+              "id": "pr-lifecycle",
+              "title": "PR Lifecycle",
+              "description": "Automate PR description, review checks, and merge readiness",
+              "file": "automation/pr-lifecycle.md",
+              "tags": ["git", "pr", "automation"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "evals",
+      "name": "Evals",
+      "icon": "search",
+      "color": "#34d399",
+      "description": "Evaluation frameworks for LLM outputs and agent behaviour",
+      "categories": [
+        {
+          "id": "output",
+          "name": "Output Quality",
+          "icon": "file-text",
+          "color": "#34d399",
+          "items": [
+            {
+              "id": "hallucination-check",
+              "title": "Hallucination Check",
+              "description": "Detect and score factual hallucinations against grounding sources",
+              "file": "output/hallucination-check.md",
+              "tags": ["hallucination", "factuality", "grounding"]
+            },
+            {
+              "id": "response-quality",
+              "title": "Response Quality Rubric",
+              "description": "Multi-dimensional rubric for scoring LLM responses in production",
+              "file": "output/response-quality.md",
+              "tags": ["quality", "rubric", "scoring"]
+            }
+          ]
+        },
+        {
+          "id": "agents",
+          "name": "Agent Evals",
+          "icon": "cpu",
+          "color": "#818cf8",
+          "items": [
+            {
+              "id": "task-completion",
+              "title": "Task Completion Eval",
+              "description": "Evaluate whether an agent successfully completed a task end-to-end",
+              "file": "agents/task-completion.md",
+              "tags": ["agent", "task", "trajectory"]
+            },
+            {
+              "id": "tool-usage",
+              "title": "Tool Usage Eval",
+              "description": "Evaluate the quality and efficiency of an agent's tool calls",
+              "file": "agents/tool-usage.md",
+              "tags": ["agent", "tools", "efficiency"]
             }
           ]
         }
