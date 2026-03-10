@@ -2,6 +2,10 @@
 
 A reusable skill for conducting thorough, multi-source research on any topic.
 
+**Research topic**: {{RESEARCH_TOPIC}}
+
+---
+
 ## Trigger
 
 Use this skill when the user asks to "research", "investigate", "find out about", or "look into" a topic in depth.

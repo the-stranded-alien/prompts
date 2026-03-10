@@ -5,6 +5,7 @@ import { Section, Item, Selection } from "../types";
 import Sidebar from "./Sidebar";
 import ItemViewer from "./ItemViewer";
 import EmptyState from "./EmptyState";
+import ThemeToggle from "./ThemeToggle";
 import { SearchIcon, MenuIcon, XIcon, getIconByName } from "./Icons";
 
 interface MainClientProps {
@@ -19,8 +20,8 @@ export default function MainClient({ sections }: MainClientProps) {
 
   const activeSection = sections.find((s) => s.id === activeSectionId) ?? sections[0];
 
-  const handleSelectSection = (sectionId: string) => {
-    setActiveSectionId(sectionId);
+  const handleSelectSection = (id: string) => {
+    setActiveSectionId(id);
     setSelection(null);
     setSearchQuery("");
   };
@@ -34,62 +35,76 @@ export default function MainClient({ sections }: MainClientProps) {
     ? activeSection?.categories.find((c) => c.id === selection.categoryId)
     : null;
 
-  const totalItems = activeSection?.categories.reduce((sum, c) => sum + c.items.length, 0) ?? 0;
+  const totalItems = activeSection?.categories.reduce((s, c) => s + c.items.length, 0) ?? 0;
 
   return (
-    <div className="flex h-screen bg-zinc-950 text-zinc-100 overflow-hidden">
+    <div className="flex h-screen overflow-hidden bg-[--bg]">
+      {/* Background */}
+      <div className="fixed inset-0 -z-10 pointer-events-none">
+        <div className="absolute inset-0 bg-mesh" />
+        <div className="absolute inset-0 bg-dot-grid" />
+      </div>
+
+      {/* Mobile overlay */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 bg-black/60 z-20 lg:hidden backdrop-blur-sm"
+          className="fixed inset-0 bg-black/50 z-20 lg:hidden backdrop-blur-sm"
           onClick={() => setSidebarOpen(false)}
         />
       )}
 
-      {/* Sidebar */}
+      {/* ── Sidebar ───────────────────────────────── */}
       <aside
         className={`
           fixed lg:relative inset-y-0 left-0 z-30 lg:z-auto
-          w-[264px] flex-none flex flex-col bg-zinc-950 border-r border-zinc-800/60
+          w-64 flex-none flex flex-col
+          bg-[--bg-sidebar] border-r border-[--border]
           transform transition-transform duration-300 ease-in-out
           ${sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
         `}
       >
-        {/* Site header */}
-        <div className="flex-none px-4 pt-5 pb-3 border-b border-zinc-800/60">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center shrink-0">
-                <svg className="w-3.5 h-3.5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
-                  <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
+        {/* Logo */}
+        <div className="flex-none px-4 pt-4 pb-3 border-b border-[--border]">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2.5">
+              {/* SG monogram */}
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 via-violet-500 to-purple-600 flex items-center justify-center shrink-0 shadow-lg shadow-indigo-500/25">
+                <span className="text-white text-[11px] font-black tracking-tight leading-none">SG</span>
               </div>
-              <span className="text-sm font-bold text-white tracking-tight">vault</span>
-              <span className="text-sm text-zinc-600 tracking-tight">· guptasahil.in</span>
+              <div>
+                <p className="text-[13px] font-bold text-[--text-primary] leading-none">AI Vault</p>
+                <p className="text-[10px] text-[--text-muted] mt-0.5 leading-none">by Sahil Gupta</p>
+              </div>
             </div>
-            <button className="lg:hidden p-1 text-zinc-500 hover:text-white" onClick={() => setSidebarOpen(false)}>
-              <XIcon className="w-4 h-4" />
-            </button>
+            <div className="flex items-center gap-1">
+              <ThemeToggle />
+              <button className="lg:hidden flex items-center justify-center w-8 h-8 rounded-lg text-[--text-muted] hover:text-[--text-primary] hover:bg-[--bg-elevated]" onClick={() => setSidebarOpen(false)}>
+                <XIcon className="w-4 h-4" />
+              </button>
+            </div>
           </div>
+        </div>
 
-          {/* Section switcher */}
-          <div className="flex gap-1 p-1 bg-zinc-900 rounded-lg border border-zinc-800/60">
-            {sections.map((section) => {
-              const Icon = getIconByName(section.icon);
-              const isActive = section.id === activeSectionId;
+        {/* Section switcher */}
+        <div className="flex-none px-3 py-2.5 border-b border-[--border]">
+          <div className="flex gap-1 p-1 bg-[--bg-elevated] rounded-xl border border-[--border]">
+            {sections.map((s) => {
+              const Icon = getIconByName(s.icon);
+              const isActive = s.id === activeSectionId;
               return (
                 <button
-                  key={section.id}
-                  onClick={() => handleSelectSection(section.id)}
-                  className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 px-2 rounded-md text-xs font-medium transition-all ${
+                  key={s.id}
+                  onClick={() => handleSelectSection(s.id)}
+                  className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 px-2 rounded-lg text-[11px] font-semibold transition-all ${
                     isActive
-                      ? "bg-zinc-800 text-white shadow-sm"
-                      : "text-zinc-500 hover:text-zinc-300"
+                      ? "bg-[--bg-sidebar] text-[--text-primary] shadow-sm"
+                      : "text-[--text-muted] hover:text-[--text-secondary]"
                   }`}
                 >
-                  <Icon
-                    className="w-3.5 h-3.5 shrink-0"
-                  />
-                  <span>{section.name}</span>
+                  <span style={isActive ? { color: s.color } : {}}>
+                    <Icon className="w-3.5 h-3.5 shrink-0" />
+                  </span>
+                  <span>{s.name}</span>
                 </button>
               );
             })}
@@ -97,20 +112,22 @@ export default function MainClient({ sections }: MainClientProps) {
         </div>
 
         {/* Search */}
-        <div className="flex-none px-3 py-2.5 border-b border-zinc-800/40">
+        <div className="flex-none px-3 py-2 border-b border-[--border]">
           <div className="relative">
-            <SearchIcon className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-zinc-600 pointer-events-none" />
+            <SearchIcon className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[--text-muted] pointer-events-none" />
             <input
               type="text"
-              placeholder={`Search ${activeSection?.name.toLowerCase()}...`}
+              placeholder={`Search ${activeSection?.name.toLowerCase()}…`}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-zinc-900/60 border border-zinc-800/60 rounded-lg pl-8 pr-3 py-1.5 text-xs text-zinc-300 placeholder-zinc-600 outline-none focus:border-zinc-600 transition-colors"
+              className="w-full bg-[--bg] border border-[--border] rounded-lg pl-8 pr-3 py-1.5 text-xs
+                text-[--text-primary] placeholder-[--text-muted] outline-none
+                focus:border-[--border-hover] transition-colors"
             />
           </div>
         </div>
 
-        {/* Nav tree */}
+        {/* Nav */}
         <div className="flex-1 overflow-y-auto px-2 py-1">
           {activeSection && (
             <Sidebar
@@ -127,48 +144,45 @@ export default function MainClient({ sections }: MainClientProps) {
         </div>
 
         {/* Footer */}
-        <div className="flex-none px-4 py-2.5 border-t border-zinc-800/60">
+        <div className="flex-none px-4 py-2.5 border-t border-[--border]">
           <div className="flex items-center justify-between">
-            <p className="text-[10px] text-zinc-700">vault.guptasahil.in</p>
-            <p className="text-[10px] text-zinc-700 tabular-nums">{totalItems} items</p>
+            <span className="text-[10px] text-[--text-muted]">vault.guptasahil.in</span>
+            <span
+              className="text-[10px] font-mono tabular-nums px-1.5 py-0.5 rounded"
+              style={{ background: `${activeSection?.color}12`, color: activeSection?.color }}
+            >
+              {totalItems} items
+            </span>
           </div>
         </div>
       </aside>
 
-      {/* Main */}
+      {/* ── Main ──────────────────────────────────── */}
       <main className="flex-1 flex flex-col min-w-0 overflow-hidden">
-        {/* Mobile top bar */}
-        <div className="lg:hidden flex items-center gap-3 px-4 py-3 border-b border-zinc-800/60 flex-none">
-          <button onClick={() => setSidebarOpen(true)} className="p-1 text-zinc-500 hover:text-white">
+        {/* Mobile topbar */}
+        <div className="lg:hidden flex items-center gap-3 px-4 py-3 border-b border-[--border] bg-[--bg-sidebar] flex-none">
+          <button onClick={() => setSidebarOpen(true)} className="p-1 text-[--text-muted] hover:text-[--text-primary]">
             <MenuIcon className="w-5 h-5" />
           </button>
-          {selection && selectedCategory && activeSection ? (
+          {selection && activeSection ? (
             <div className="flex items-center gap-1.5 min-w-0">
-              <span className="text-[11px] font-medium uppercase tracking-widest" style={{ color: activeSection.color }}>
+              <span className="text-[11px] font-semibold uppercase tracking-widest" style={{ color: activeSection.color }}>
                 {activeSection.name}
               </span>
-              <span className="text-zinc-700 text-xs">/</span>
-              <span className="text-sm text-zinc-300 truncate">{selection.item.title}</span>
+              <span className="text-[--text-muted] text-xs">/</span>
+              <span className="text-sm text-[--text-secondary] truncate">{selection.item.title}</span>
             </div>
           ) : (
-            <span className="text-sm text-zinc-500">{activeSection?.name}</span>
+            <span className="text-sm font-semibold text-[--text-primary]">AI Vault</span>
           )}
+          <div className="ml-auto"><ThemeToggle /></div>
         </div>
 
         <div className="flex-1 overflow-hidden">
           {selection && selectedCategory && activeSection ? (
-            <ItemViewer
-              item={selection.item}
-              category={selectedCategory}
-              section={activeSection}
-            />
+            <ItemViewer item={selection.item} category={selectedCategory} section={activeSection} />
           ) : (
-            activeSection && (
-              <EmptyState
-                section={activeSection}
-                onSelectItem={handleSelectItem}
-              />
-            )
+            activeSection && <EmptyState section={activeSection} onSelectItem={handleSelectItem} />
           )}
         </div>
       </main>
