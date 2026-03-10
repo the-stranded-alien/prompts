@@ -1,0 +1,139 @@
+{
+  "sections": [
+    {
+      "id": "prompts",
+      "name": "Prompts",
+      "icon": "file-text",
+      "color": "#818cf8",
+      "description": "LLM prompts for coding, writing, and AI systems",
+      "categories": [
+        {
+          "id": "coding",
+          "name": "Coding",
+          "icon": "code",
+          "color": "#818cf8",
+          "items": [
+            {
+              "id": "code-review",
+              "title": "Code Review",
+              "description": "Thorough code review covering quality, security, and performance",
+              "file": "coding/code-review.md",
+              "tags": ["review", "quality", "security"]
+            },
+            {
+              "id": "refactor",
+              "title": "Refactoring Guide",
+              "description": "Step-by-step refactoring with pattern suggestions",
+              "file": "coding/refactor.md",
+              "tags": ["refactor", "clean code"]
+            },
+            {
+              "id": "debug",
+              "title": "Debug Assistant",
+              "description": "Systematic debugging and root cause analysis",
+              "file": "coding/debug.md",
+              "tags": ["debug", "troubleshoot"]
+            }
+          ]
+        },
+        {
+          "id": "writing",
+          "name": "Writing",
+          "icon": "pen",
+          "color": "#34d399",
+          "items": [
+            {
+              "id": "blog-post",
+              "title": "Blog Post Writer",
+              "description": "Write engaging, SEO-optimised blog posts",
+              "file": "writing/blog-post.md",
+              "tags": ["blog", "seo", "content"]
+            },
+            {
+              "id": "technical-doc",
+              "title": "Technical Documentation",
+              "description": "Clear and structured technical documentation",
+              "file": "writing/technical-doc.md",
+              "tags": ["docs", "technical"]
+            }
+          ]
+        },
+        {
+          "id": "system",
+          "name": "System Prompts",
+          "icon": "cpu",
+          "color": "#fb923c",
+          "items": [
+            {
+              "id": "assistant-base",
+              "title": "Base Assistant",
+              "description": "A solid base system prompt for a helpful AI assistant",
+              "file": "system/assistant-base.md",
+              "tags": ["system", "assistant"]
+            },
+            {
+              "id": "code-agent",
+              "title": "Code Agent",
+              "description": "System prompt for an autonomous coding agent",
+              "file": "system/code-agent.md",
+              "tags": ["system", "agent", "coding"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "skills",
+      "name": "Skills",
+      "icon": "zap",
+      "color": "#2dd4bf",
+      "description": "Reusable agent skills and workflows",
+      "categories": [
+        {
+          "id": "research",
+          "name": "Research",
+          "icon": "search",
+          "color": "#2dd4bf",
+          "items": [
+            {
+              "id": "deep-research",
+              "title": "Deep Research",
+              "description": "Multi-source research with structured synthesis",
+              "file": "research/deep-research.md",
+              "tags": ["research", "web", "synthesis"]
+            },
+            {
+              "id": "summarise",
+              "title": "Summarise",
+              "description": "Condense any content into a structured TL;DR",
+              "file": "research/summarise.md",
+              "tags": ["summary", "tl;dr", "content"]
+            }
+          ]
+        },
+        {
+          "id": "coding",
+          "name": "Coding",
+          "icon": "code",
+          "color": "#818cf8",
+          "items": [
+            {
+              "id": "test-writer",
+              "title": "Test Writer",
+              "description": "Generate comprehensive tests for any code",
+              "file": "coding/test-writer.md",
+              "tags": ["tests", "coverage", "quality"]
+            },
+            {
+              "id": "pr-review",
+              "title": "PR Review",
+              "description": "Structured pull request review skill",
+              "file": "coding/pr-review.md",
+              "tags": ["pr", "review", "git"]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
