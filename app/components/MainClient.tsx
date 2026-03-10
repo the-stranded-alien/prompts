@@ -102,7 +102,15 @@ export default function MainClient({ sections }: MainClientProps) {
               >
                 <span className="text-white text-[11px] font-black tracking-tight leading-none">SG</span>
               </div>
-              <p className="text-[13px] font-bold text-[--text-primary] leading-none">AI Vault</p>
+              <div className="flex items-center gap-2">
+                <p className="text-[13px] font-bold text-[--text-primary] leading-none">AI Vault</p>
+                <span
+                  className="text-[10px] font-mono tabular-nums px-1.5 py-0.5 rounded"
+                  style={{ background: `${activeSection?.color}14`, color: activeSection?.color }}
+                >
+                  {totalItems} items
+                </span>
+              </div>
             </div>
             <div className="flex items-center gap-1">
               <ThemeToggle />
@@ -202,15 +210,6 @@ export default function MainClient({ sections }: MainClientProps) {
             ))}
           </div>
 
-          <div className="flex items-center justify-between">
-            <span className="text-[10px] text-[--text-muted]">vault.guptasahil.in</span>
-            <span
-              className="text-[10px] font-mono tabular-nums px-1.5 py-0.5 rounded"
-              style={{ background: `${activeSection?.color}14`, color: activeSection?.color }}
-            >
-              {totalItems} items
-            </span>
-          </div>
         </div>
       </aside>
 
