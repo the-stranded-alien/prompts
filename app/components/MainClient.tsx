@@ -39,10 +39,12 @@ export default function MainClient({ sections }: MainClientProps) {
 
   return (
     <div className="flex h-screen overflow-hidden bg-[--bg]">
-      {/* Background */}
-      <div className="fixed inset-0 -z-10 pointer-events-none">
-        <div className="absolute inset-0 bg-mesh" />
-        <div className="absolute inset-0 bg-dot-grid" />
+      {/* ── Animated background ───────────────── */}
+      <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+        <div className="absolute inset-0 bg-grid" />
+        <div className="orb orb-a" />
+        <div className="orb orb-b" />
+        <div className="orb orb-c" />
       </div>
 
       {/* Mobile overlay */}
@@ -53,32 +55,37 @@ export default function MainClient({ sections }: MainClientProps) {
         />
       )}
 
-      {/* ── Sidebar ───────────────────────────────── */}
+      {/* ── Sidebar ───────────────────────────── */}
       <aside
         className={`
           fixed lg:relative inset-y-0 left-0 z-30 lg:z-auto
           w-64 flex-none flex flex-col
-          bg-[--bg-sidebar] border-r border-[--border]
+          border-r border-[--border]
           transform transition-transform duration-300 ease-in-out
           ${sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
         `}
+        style={{ background: "var(--bg-sidebar)" }}
       >
         {/* Logo */}
         <div className="flex-none px-4 pt-4 pb-3 border-b border-[--border]">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              {/* SG monogram */}
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 via-violet-500 to-purple-600 flex items-center justify-center shrink-0 shadow-lg shadow-indigo-500/25">
+              {/* SG monogram with float animation */}
+              <div
+                className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 animate-float logo-shimmer"
+                style={{ boxShadow: "0 4px 16px rgba(99,102,241,0.35)" }}
+              >
                 <span className="text-white text-[11px] font-black tracking-tight leading-none">SG</span>
               </div>
-              <div>
-                <p className="text-[13px] font-bold text-[--text-primary] leading-none">AI Vault</p>
-                <p className="text-[10px] text-[--text-muted] mt-0.5 leading-none">by Sahil Gupta</p>
-              </div>
+              <p className="text-[13px] font-bold text-[--text-primary] leading-none">AI Vault</p>
             </div>
             <div className="flex items-center gap-1">
               <ThemeToggle />
-              <button className="lg:hidden flex items-center justify-center w-8 h-8 rounded-lg text-[--text-muted] hover:text-[--text-primary] hover:bg-[--bg-elevated]" onClick={() => setSidebarOpen(false)}>
+              <button
+                className="lg:hidden flex items-center justify-center w-8 h-8 rounded-lg
+                  text-[--text-muted] hover:text-[--text-primary] hover:bg-[--bg-elevated] transition-colors"
+                onClick={() => setSidebarOpen(false)}
+              >
                 <XIcon className="w-4 h-4" />
               </button>
             </div>
@@ -87,7 +94,10 @@ export default function MainClient({ sections }: MainClientProps) {
 
         {/* Section switcher */}
         <div className="flex-none px-3 py-2.5 border-b border-[--border]">
-          <div className="flex gap-1 p-1 bg-[--bg-elevated] rounded-xl border border-[--border]">
+          <div
+            className="flex gap-1 p-1 rounded-xl border border-[--border]"
+            style={{ background: "var(--bg-elevated)" }}
+          >
             {sections.map((s) => {
               const Icon = getIconByName(s.icon);
               const isActive = s.id === activeSectionId;
@@ -95,11 +105,13 @@ export default function MainClient({ sections }: MainClientProps) {
                 <button
                   key={s.id}
                   onClick={() => handleSelectSection(s.id)}
-                  className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 px-2 rounded-lg text-[11px] font-semibold transition-all ${
+                  className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 px-2 rounded-lg
+                    text-[11px] font-bold transition-all duration-200 ${
                     isActive
-                      ? "bg-[--bg-sidebar] text-[--text-primary] shadow-sm"
+                      ? "text-[--text-primary] shadow-sm"
                       : "text-[--text-muted] hover:text-[--text-secondary]"
                   }`}
+                  style={isActive ? { background: "var(--bg-sidebar)" } : {}}
                 >
                   <span style={isActive ? { color: s.color } : {}}>
                     <Icon className="w-3.5 h-3.5 shrink-0" />
@@ -120,14 +132,15 @@ export default function MainClient({ sections }: MainClientProps) {
               placeholder={`Search ${activeSection?.name.toLowerCase()}…`}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-[--bg] border border-[--border] rounded-lg pl-8 pr-3 py-1.5 text-xs
-                text-[--text-primary] placeholder-[--text-muted] outline-none
-                focus:border-[--border-hover] transition-colors"
+              className="w-full border border-[--border] rounded-lg pl-8 pr-3 py-1.5 text-xs
+                text-[--text-primary] placeholder-[--text-muted] outline-none transition-all
+                focus:border-[--border-hover] focus:ring-1 focus:ring-[--border-hover]"
+              style={{ background: "var(--bg)" }}
             />
           </div>
         </div>
 
-        {/* Nav */}
+        {/* Nav tree */}
         <div className="flex-1 overflow-y-auto px-2 py-1">
           {activeSection && (
             <Sidebar
@@ -149,7 +162,7 @@ export default function MainClient({ sections }: MainClientProps) {
             <span className="text-[10px] text-[--text-muted]">vault.guptasahil.in</span>
             <span
               className="text-[10px] font-mono tabular-nums px-1.5 py-0.5 rounded"
-              style={{ background: `${activeSection?.color}12`, color: activeSection?.color }}
+              style={{ background: `${activeSection?.color}14`, color: activeSection?.color }}
             >
               {totalItems} items
             </span>
@@ -157,32 +170,46 @@ export default function MainClient({ sections }: MainClientProps) {
         </div>
       </aside>
 
-      {/* ── Main ──────────────────────────────────── */}
+      {/* ── Main ──────────────────────────────── */}
       <main className="flex-1 flex flex-col min-w-0 overflow-hidden">
         {/* Mobile topbar */}
-        <div className="lg:hidden flex items-center gap-3 px-4 py-3 border-b border-[--border] bg-[--bg-sidebar] flex-none">
-          <button onClick={() => setSidebarOpen(true)} className="p-1 text-[--text-muted] hover:text-[--text-primary]">
+        <div
+          className="lg:hidden flex items-center gap-3 px-4 py-3 border-b border-[--border] flex-none"
+          style={{ background: "var(--bg-sidebar)" }}
+        >
+          <button onClick={() => setSidebarOpen(true)} className="p-1 text-[--text-muted] hover:text-[--text-primary] transition-colors">
             <MenuIcon className="w-5 h-5" />
           </button>
           {selection && activeSection ? (
             <div className="flex items-center gap-1.5 min-w-0">
-              <span className="text-[11px] font-semibold uppercase tracking-widest" style={{ color: activeSection.color }}>
+              <span className="text-[11px] font-bold uppercase tracking-widest" style={{ color: activeSection.color }}>
                 {activeSection.name}
               </span>
               <span className="text-[--text-muted] text-xs">/</span>
               <span className="text-sm text-[--text-secondary] truncate">{selection.item.title}</span>
             </div>
           ) : (
-            <span className="text-sm font-semibold text-[--text-primary]">AI Vault</span>
+            <span className="text-sm font-bold text-[--text-primary]">AI Vault</span>
           )}
           <div className="ml-auto"><ThemeToggle /></div>
         </div>
 
         <div className="flex-1 overflow-hidden">
           {selection && selectedCategory && activeSection ? (
-            <ItemViewer item={selection.item} category={selectedCategory} section={activeSection} />
+            <ItemViewer
+              key={`${selection.sectionId}-${selection.categoryId}-${selection.item.id}`}
+              item={selection.item}
+              category={selectedCategory}
+              section={activeSection}
+            />
           ) : (
-            activeSection && <EmptyState section={activeSection} onSelectItem={handleSelectItem} />
+            activeSection && (
+              <EmptyState
+                key={activeSectionId}
+                section={activeSection}
+                onSelectItem={handleSelectItem}
+              />
+            )
           )}
         </div>
       </main>
