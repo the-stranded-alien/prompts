@@ -5,7 +5,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import type { Components } from "react-markdown";
 import { Section, Category, Item } from "../types";
-import { CopyIcon, CheckIcon, SlidersIcon, ChevronDownIcon, getIconByName } from "./Icons";
+import { CopyIcon, CheckIcon, SlidersIcon, ChevronDownIcon, EyeIcon, TerminalIcon, getIconByName } from "./Icons";
 
 interface ItemViewerProps {
   item: Item;
@@ -211,29 +211,63 @@ export default function ItemViewer({ item, category, section }: ItemViewerProps)
 
           {/* Actions */}
           <div className="flex items-center gap-2 shrink-0">
-            {/* Markdown | Preview toggle */}
-            <div className="flex p-0.5 rounded-lg border border-[--border]"
+            {/* Sliding Markdown | Preview toggle */}
+            <div className="relative flex p-1 rounded-xl border border-[--border]"
               style={{ background: "var(--bg-elevated)" }}>
-              {(["markdown", "preview"] as ViewMode[]).map((mode) => (
+              {/* Sliding indicator */}
+              <div
+                className="absolute top-1 bottom-1 rounded-lg transition-all duration-200 ease-in-out"
+                style={{
+                  background: "var(--bg-sidebar)",
+                  boxShadow: "0 1px 6px rgba(0,0,0,0.12)",
+                  left:  viewMode === "markdown" ? "4px" : "calc(50% + 0px)",
+                  width: "calc(50% - 4px)",
+                }}
+              />
+              {([
+                { mode: "markdown", Icon: TerminalIcon, label: "Markdown" },
+                { mode: "preview",  Icon: EyeIcon,      label: "Preview"  },
+              ] as { mode: ViewMode; Icon: React.FC<{className?: string}>; label: string }[]).map(({ mode, Icon, label }) => (
                 <button key={mode} onClick={() => setViewMode(mode)}
-                  className={`px-3 py-1.5 rounded-md text-[11px] font-bold uppercase tracking-wide transition-all ${
+                  className={`relative z-10 flex items-center gap-1.5 px-3 py-1.5 rounded-lg
+                    text-[11px] font-semibold transition-colors duration-150 ${
                     viewMode === mode
-                      ? "text-[--text-primary] shadow-sm"
+                      ? "text-[--text-primary]"
                       : "text-[--text-muted] hover:text-[--text-secondary]"
-                  }`}
-                  style={viewMode === mode ? { background: "var(--bg-sidebar)" } : {}}>
-                  {mode}
+                  }`}>
+                  <Icon className="w-3 h-3 shrink-0" />
+                  {label}
                 </button>
               ))}
             </div>
 
+            {/* Copy button */}
             <button onClick={handleCopy}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all border ${
-                copied
-                  ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
-                  : "text-[--text-secondary] border-[--border] hover:text-[--text-primary] hover:border-[--border-hover]"
-              }`}
-              style={!copied ? { background: "var(--bg-elevated)" } : {}}>
+              className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold
+                transition-all duration-200 active:scale-95"
+              style={copied ? {
+                background: "linear-gradient(135deg, #10b981, #059669)",
+                color: "white",
+                boxShadow: "0 0 18px rgba(16,185,129,0.35)",
+                transform: "scale(0.97)",
+              } : {
+                background: "var(--bg-elevated)",
+                border: "1px solid var(--border)",
+                color: "var(--text-secondary)",
+              }}
+              onMouseEnter={(e) => {
+                if (!copied) {
+                  (e.currentTarget as HTMLButtonElement).style.borderColor = "var(--border-hover)";
+                  (e.currentTarget as HTMLButtonElement).style.color = "var(--text-primary)";
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (!copied) {
+                  (e.currentTarget as HTMLButtonElement).style.borderColor = "var(--border)";
+                  (e.currentTarget as HTMLButtonElement).style.color = "var(--text-secondary)";
+                }
+              }}
+            >
               {copied
                 ? <><CheckIcon className="w-4 h-4" />Copied!</>
                 : <><CopyIcon className="w-4 h-4" />Copy</>}
@@ -340,7 +374,7 @@ export default function ItemViewer({ item, category, section }: ItemViewerProps)
               <div className="px-8 pt-7 pb-5"
                 style={{ background: `linear-gradient(135deg, ${category.color}0a, ${section.color}06)`,
                   borderBottom: "1px solid var(--border)" }}>
-                <div className="flex items-center gap-2 mb-3">
+                <div className="flex items-center gap-2 mb-3 flex-wrap">
                   <span className="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full"
                     style={{ background: `${section.color}18`, color: section.color }}>
                     {section.name}
@@ -348,6 +382,10 @@ export default function ItemViewer({ item, category, section }: ItemViewerProps)
                   <span className="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full"
                     style={{ background: `${category.color}18`, color: category.color }}>
                     {category.name}
+                  </span>
+                  <span className="text-[10px] font-mono text-[--text-muted] ml-auto"
+                    style={{ fontFamily: "var(--font-geist-mono, monospace)" }}>
+                    {section.id}/{category.id}/{item.id}.md
                   </span>
                 </div>
                 <h2 className="text-xl font-black text-[--text-primary]">{item.title}</h2>

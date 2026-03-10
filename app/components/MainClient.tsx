@@ -60,8 +60,6 @@ export default function MainClient({ sections }: MainClientProps) {
     ? activeSection?.categories.find((c) => c.id === selection.categoryId)
     : null;
 
-  const totalItems = activeSection?.categories.reduce((s, c) => s + c.items.length, 0) ?? 0;
-
   return (
     <div className="flex h-screen overflow-hidden bg-[--bg]">
       {/* ── Animated background ───────────────── */}
@@ -102,15 +100,7 @@ export default function MainClient({ sections }: MainClientProps) {
               >
                 <span className="text-white text-[11px] font-black tracking-tight leading-none">SG</span>
               </div>
-              <div className="flex items-center gap-2">
-                <p className="text-[13px] font-bold text-[--text-primary] leading-none">AI Vault</p>
-                <span
-                  className="text-[10px] font-mono tabular-nums px-1.5 py-0.5 rounded"
-                  style={{ background: `${activeSection?.color}14`, color: activeSection?.color }}
-                >
-                  {totalItems} items
-                </span>
-              </div>
+              <p className="text-[13px] font-bold text-[--text-primary] leading-none">AI Vault</p>
             </div>
             <div className="flex items-center gap-1">
               <ThemeToggle />
@@ -134,6 +124,7 @@ export default function MainClient({ sections }: MainClientProps) {
             {sections.map((s) => {
               const Icon = getIconByName(s.icon);
               const isActive = s.id === activeSectionId;
+              const sectionCount = s.categories.reduce((sum, c) => sum + c.items.length, 0);
               return (
                 <button
                   key={s.id}
@@ -150,6 +141,15 @@ export default function MainClient({ sections }: MainClientProps) {
                     <Icon className="w-3.5 h-3.5 shrink-0" />
                   </span>
                   <span>{s.name}</span>
+                  <span
+                    className="text-[9px] font-mono tabular-nums px-1 py-px rounded"
+                    style={isActive
+                      ? { background: `${s.color}18`, color: s.color }
+                      : { background: "var(--bg)", color: "var(--text-muted)" }
+                    }
+                  >
+                    {sectionCount}
+                  </span>
                 </button>
               );
             })}
