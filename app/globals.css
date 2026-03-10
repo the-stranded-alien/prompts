@@ -7,16 +7,16 @@
 /* ── Design tokens ─────────────────────────────── */
 :root {
   /* Indigo-tinted light palette */
-  --bg:             #f8f6ff;
+  --bg:             #f7f5ff;
   --bg-sidebar:     #ffffff;
   --bg-elevated:    #ede9ff;
-  --border:         rgba(109, 40, 217, 0.09);
-  --border-hover:   rgba(109, 40, 217, 0.2);
-  --text-primary:   #1e1a3c;
-  --text-secondary: #4a3f7a;
-  --text-muted:     #9b8fc0;
-  --grid-major:     rgba(109, 40, 217, 0.055);
-  --grid-minor:     rgba(109, 40, 217, 0.022);
+  --border:         rgba(109, 40, 217, 0.12);
+  --border-hover:   rgba(109, 40, 217, 0.28);
+  --text-primary:   #0c0a1e;
+  --text-secondary: #2d2652;
+  --text-muted:     #6b5f96;
+  --grid-major:     rgba(109, 40, 217, 0.07);
+  --grid-minor:     rgba(109, 40, 217, 0.028);
   --glow-a:         rgba(99,  102, 241, 0.18);
   --glow-b:         rgba(167,  139, 250, 0.12);
   --glow-c:         rgba(52,  211, 153, 0.08);
