@@ -20,11 +20,29 @@
   --glow-a:         rgba(99,  102, 241, 0.18);
   --glow-b:         rgba(167,  139, 250, 0.12);
   --glow-c:         rgba(52,  211, 153, 0.08);
+  /* Markdown syntax colours — light */
+  --syn-h1:         #5b21b6;
+  --syn-h2:         #3730a3;
+  --syn-h3:         #065f46;
+  --syn-code:       #92400e;
+  --syn-list:       #166534;
+  --syn-bold:       #0c0a1e;
+  --syn-quote:      #6b5f96;
+  --syn-var:        #92400e;
 }
 
 .dark {
   /* Indigo-tinted dark palette */
   --bg:             #07070f;
+  /* Markdown syntax colours — dark */
+  --syn-h1:         #a78bfa;
+  --syn-h2:         #818cf8;
+  --syn-h3:         #6ee7b7;
+  --syn-code:       #fbbf24;
+  --syn-list:       #86efac;
+  --syn-bold:       #e2d9f3;
+  --syn-quote:      #5b4f84;
+  --syn-var:        #fbbf24;
   --bg-sidebar:     #0c0b18;
   --bg-elevated:    #13111f;
   --border:         rgba(139, 92, 246, 0.10);

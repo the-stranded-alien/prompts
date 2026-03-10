@@ -39,14 +39,14 @@ function MarkdownLine({ line }: { line: string }) {
   let color = "var(--text-secondary)";
   let fontWeight = "normal";
 
-  if      (/^#\s/.test(line))                          { color = "#a78bfa"; fontWeight = "700"; }
-  else if (/^##\s/.test(line))                         { color = "#818cf8"; fontWeight = "600"; }
-  else if (/^###\s/.test(line))                        { color = "#6ee7b7"; fontWeight = "600"; }
-  else if (/^```/.test(line))                          { color = "#fbbf24"; }
-  else if (/^>\s/.test(line))                          { color = "var(--text-muted)"; }
-  else if (/^[-*]\s/.test(line) || /^\d+\.\s/.test(line)) { color = "#86efac"; }
-  else if (/^\*\*/.test(line) || /^__/.test(line))    { color = "#e2d9f3"; }
-  else if (/\{\{[A-Z_]+\}\}/.test(line))              { color = "#fbbf24"; }
+  if      (/^#\s/.test(line))                              { color = "var(--syn-h1)";   fontWeight = "700"; }
+  else if (/^##\s/.test(line))                             { color = "var(--syn-h2)";   fontWeight = "600"; }
+  else if (/^###\s/.test(line))                            { color = "var(--syn-h3)";   fontWeight = "600"; }
+  else if (/^```/.test(line))                              { color = "var(--syn-code)"; }
+  else if (/^>\s/.test(line))                              { color = "var(--syn-quote)"; }
+  else if (/^[-*]\s/.test(line) || /^\d+\.\s/.test(line)) { color = "var(--syn-list)"; }
+  else if (/^\*\*/.test(line) || /^__/.test(line))        { color = "var(--syn-bold)"; }
+  else if (/\{\{[A-Z_]+\}\}/.test(line))                  { color = "var(--syn-var)";  }
 
   return (
     <span style={{ color, fontWeight, whiteSpace: "pre-wrap" }}>
@@ -333,8 +333,8 @@ export default function ItemViewer({ item, category, section }: ItemViewerProps)
           </div>
         ) : (
           /* ── Preview view ── */
-          <div key="preview" className="animate-fade-slide p-6 lg:p-8">
-            <div className="max-w-2xl mx-auto rounded-2xl border border-[--border] overflow-hidden shadow-xl"
+          <div key="preview" className="animate-fade-slide p-4 lg:p-6">
+            <div className="max-w-5xl mx-auto rounded-2xl border border-[--border] overflow-hidden shadow-xl"
               style={{ background: "var(--bg-sidebar)", boxShadow: `0 20px 60px ${category.color}0c` }}>
               {/* Document header band */}
               <div className="px-8 pt-7 pb-5"
