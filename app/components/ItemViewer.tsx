@@ -120,7 +120,8 @@ export default function ItemViewer({ item, category, section }: ItemViewerProps)
       const isBlock = className?.includes("language-");
       if (isBlock) {
         return (
-          <code className="block text-[13px] font-mono text-amber-300 leading-relaxed">
+          <code className="block text-[13px] font-mono leading-relaxed"
+            style={{ color: "var(--syn-code)" }}>
             {children}
           </code>
         );
@@ -180,8 +181,8 @@ export default function ItemViewer({ item, category, section }: ItemViewerProps)
       />
 
       {/* ── Header ──────────────────────────────── */}
-      <div className="flex-none border-b border-[--border] px-7 pt-6 pb-5">
-        <div className="flex items-start justify-between gap-4">
+      <div className="flex-none border-b border-[--border] px-4 sm:px-7 pt-4 sm:pt-6 pb-4 sm:pb-5">
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 sm:gap-4">
           <div className="flex items-start gap-3 min-w-0">
             <div className="flex items-center justify-center w-10 h-10 rounded-xl shrink-0 mt-0.5"
               style={{
@@ -210,7 +211,7 @@ export default function ItemViewer({ item, category, section }: ItemViewerProps)
           </div>
 
           {/* Actions */}
-          <div className="flex items-center gap-2 shrink-0">
+          <div className="flex items-center gap-2 sm:shrink-0">
             {/* Sliding Markdown | Preview toggle */}
             <div className="relative flex p-1 rounded-xl border border-[--border]"
               style={{ background: "var(--bg-elevated)" }}>
@@ -276,7 +277,7 @@ export default function ItemViewer({ item, category, section }: ItemViewerProps)
         </div>
 
         {item.tags.length > 0 && (
-          <div className="flex flex-wrap gap-1.5 mt-4 pl-13">
+          <div className="flex flex-wrap gap-1.5 mt-3">
             {item.tags.map((tag) => (
               <span key={tag}
                 className="px-2.5 py-0.5 rounded-full text-[11px] font-semibold hover:scale-105 transition-transform cursor-default"
@@ -292,18 +293,27 @@ export default function ItemViewer({ item, category, section }: ItemViewerProps)
       {vars.length > 0 && (
         <div className="flex-none border-b border-[--border]" style={{ background: "var(--bg-sidebar)" }}>
           <button onClick={() => setVarsOpen((v) => !v)}
-            className="w-full flex items-center gap-2 px-7 py-3 text-left hover:bg-[--bg-elevated] transition-colors">
+            className="w-full flex items-center gap-2 px-4 sm:px-7 py-3 text-left hover:bg-[--bg-elevated] transition-colors">
             <SlidersIcon className="w-3.5 h-3.5 text-amber-400 shrink-0" />
             <span className="text-xs font-bold uppercase tracking-widest text-amber-400">Variables</span>
             <span className="ml-1.5 text-[11px] text-[--text-muted]">{filledCount}/{vars.length} filled</span>
             {filledCount > 0 && <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />}
+            {filledCount > 0 && (
+              <button
+                onClick={(e) => { e.stopPropagation(); setValues({}); }}
+                className="ml-auto mr-2 text-[10px] font-semibold px-2 py-0.5 rounded-md transition-colors
+                  text-[--text-muted] hover:text-red-400 border border-[--border] hover:border-red-400/40"
+              >
+                Clear all
+              </button>
+            )}
             <ChevronDownIcon
-              className={`w-3.5 h-3.5 text-[--text-muted] ml-auto transition-transform duration-200 ${varsOpen ? "rotate-180" : ""}`}
+              className={`w-3.5 h-3.5 text-[--text-muted] ${filledCount > 0 ? "" : "ml-auto"} transition-transform duration-200 ${varsOpen ? "rotate-180" : ""}`}
             />
           </button>
 
           {varsOpen && (
-            <div className="px-7 pb-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 animate-fade-slide">
+            <div className="px-4 sm:px-7 pb-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 animate-fade-slide">
               {vars.map((name) => (
                 <div key={name} className="flex flex-col gap-1.5">
                   <label className="text-[10px] font-bold uppercase tracking-widest text-[--text-muted]">
@@ -330,7 +340,7 @@ export default function ItemViewer({ item, category, section }: ItemViewerProps)
       <div className="flex-1 overflow-y-auto">
         {viewMode === "markdown" ? (
           /* ── Markdown view ── */
-          <div key="markdown" className="animate-fade-slide p-6">
+          <div key="markdown" className="animate-fade-slide p-3 sm:p-6">
             <div className="rounded-xl border border-[--border] overflow-hidden"
               style={{ background: "var(--bg-elevated)" }}>
               {/* Fake window chrome */}
@@ -367,11 +377,11 @@ export default function ItemViewer({ item, category, section }: ItemViewerProps)
           </div>
         ) : (
           /* ── Preview view ── */
-          <div key="preview" className="animate-fade-slide p-4 lg:p-6">
+          <div key="preview" className="animate-fade-slide p-3 sm:p-4 lg:p-6">
             <div className="max-w-5xl mx-auto rounded-2xl border border-[--border] overflow-hidden shadow-xl"
               style={{ background: "var(--bg-sidebar)", boxShadow: `0 20px 60px ${category.color}0c` }}>
               {/* Document header band */}
-              <div className="px-8 pt-7 pb-5"
+              <div className="px-4 sm:px-8 pt-5 sm:pt-7 pb-4 sm:pb-5"
                 style={{ background: `linear-gradient(135deg, ${category.color}0a, ${section.color}06)`,
                   borderBottom: "1px solid var(--border)" }}>
                 <div className="flex items-center gap-2 mb-3 flex-wrap">
@@ -393,7 +403,7 @@ export default function ItemViewer({ item, category, section }: ItemViewerProps)
               </div>
 
               {/* Document body */}
-              <div className="px-8 py-7">
+              <div className="px-4 sm:px-8 py-5 sm:py-7">
                 <ReactMarkdown remarkPlugins={[remarkGfm]} components={mdComponents}>
                   {forPreview}
                 </ReactMarkdown>
