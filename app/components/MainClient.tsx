@@ -65,7 +65,7 @@ export default function MainClient({ sections }: MainClientProps) {
     : null;
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[--bg]">
+    <div className="flex h-[100dvh] overflow-hidden bg-[--bg]">
       {/* ── Animated background ───────────────── */}
       <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
         <div className="absolute inset-0 bg-grid" />
@@ -274,27 +274,76 @@ export default function MainClient({ sections }: MainClientProps) {
       <main className="flex-1 flex flex-col min-w-0 overflow-hidden">
         {/* Mobile topbar */}
         <div
-          className="lg:hidden flex items-center gap-3 px-4 py-3 border-b border-[--border] flex-none"
+          className="lg:hidden flex-none border-b border-[--border]"
           style={{ background: "var(--bg-sidebar)" }}
         >
-          <button onClick={() => setSidebarOpen(true)} className="p-1 text-[--text-muted] hover:text-[--text-primary] transition-colors">
-            <MenuIcon className="w-5 h-5" />
-          </button>
-          {selection && activeSection ? (
-            <div className="flex items-center gap-1.5 min-w-0">
-              <span className="text-[11px] font-bold uppercase tracking-widest" style={{ color: activeSection.color }}>
-                {activeSection.name}
-              </span>
-              <span className="text-[--text-muted] text-xs">/</span>
-              <span className="text-sm text-[--text-secondary] truncate">{selection.item.title}</span>
+          {/* Row 1: nav + breadcrumb + theme */}
+          <div className="flex items-center gap-3 px-4 py-2.5">
+            <button onClick={() => setSidebarOpen(true)} className="p-1 text-[--text-muted] hover:text-[--text-primary] transition-colors shrink-0">
+              <MenuIcon className="w-5 h-5" />
+            </button>
+            {selection && activeSection ? (
+              <div className="flex items-center gap-1.5 min-w-0 flex-1">
+                <span className="text-[11px] font-bold uppercase tracking-widest shrink-0" style={{ color: activeSection.color }}>
+                  {activeSection.name}
+                </span>
+                <span className="text-[--text-muted] text-xs shrink-0">/</span>
+                <span className="text-sm text-[--text-secondary] truncate">{selection.item.title}</span>
+              </div>
+            ) : (
+              <span className="text-sm font-bold text-[--text-primary] flex-1">AI Vault</span>
+            )}
+            <div className="shrink-0"><ThemeToggle /></div>
+          </div>
+          {/* Row 2: primary section tabs */}
+          <div className="px-3 pb-2.5">
+            <div className="flex gap-1 p-1 rounded-xl border border-[--border]"
+              style={{ background: "var(--bg-elevated)" }}>
+              {primarySections.map((s) => {
+                const Icon = getIconByName(s.icon);
+                const isActive = s.id === activeSectionId;
+                const count = s.categories.reduce((sum, c) => sum + c.items.length, 0);
+                return (
+                  <button key={s.id} onClick={() => handleSelectSection(s.id)}
+                    className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 px-2 rounded-lg
+                      text-[11px] font-bold transition-all duration-200 ${
+                      isActive ? "text-[--text-primary] shadow-sm" : "text-[--text-muted]"
+                    }`}
+                    style={isActive ? { background: "var(--bg-sidebar)" } : {}}>
+                    <span style={isActive ? { color: s.color } : {}}>
+                      <Icon className="w-3.5 h-3.5 shrink-0" />
+                    </span>
+                    <span>{s.name}</span>
+                    <span className="text-[9px] font-mono tabular-nums px-1 py-px rounded"
+                      style={isActive
+                        ? { background: `${s.color}18`, color: s.color }
+                        : { background: "var(--bg)", color: "var(--text-muted)" }}>
+                      {count}
+                    </span>
+                  </button>
+                );
+              })}
+              {secondarySections.map((s) => {
+                const Icon = getIconByName(s.icon);
+                const isActive = s.id === activeSectionId;
+                return (
+                  <button key={s.id} onClick={() => handleSelectSection(s.id)}
+                    className={`flex items-center justify-center gap-1 py-1.5 px-2 rounded-lg
+                      text-[11px] font-bold transition-all duration-200 ${
+                      isActive ? "text-[--text-primary] shadow-sm" : "text-[--text-muted]"
+                    }`}
+                    style={isActive ? { background: "var(--bg-sidebar)" } : {}}>
+                    <span style={isActive ? { color: s.color } : {}}>
+                      <Icon className="w-3.5 h-3.5 shrink-0" />
+                    </span>
+                  </button>
+                );
+              })}
             </div>
-          ) : (
-            <span className="text-sm font-bold text-[--text-primary]">AI Vault</span>
-          )}
-          <div className="ml-auto"><ThemeToggle /></div>
+          </div>
         </div>
 
-        <div className="flex-1 overflow-hidden">
+        <div className="flex-1 min-h-0 overflow-hidden">
           {selection && selectedCategory && activeSection ? (
             <ItemViewer
               key={`${selection.sectionId}-${selection.categoryId}-${selection.item.id}`}

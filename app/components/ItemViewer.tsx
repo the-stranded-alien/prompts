@@ -337,7 +337,7 @@ export default function ItemViewer({ item, category, section }: ItemViewerProps)
       )}
 
       {/* ── Content area ────────────────────────── */}
-      <div className="flex-1 overflow-y-auto">
+      <div className="flex-1 min-h-0 overflow-y-auto">
         {viewMode === "markdown" ? (
           /* ── Markdown view ── */
           <div key="markdown" className="animate-fade-slide p-3 sm:p-6">
