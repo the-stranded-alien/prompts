@@ -323,27 +323,11 @@ export default function MainClient({ sections }: MainClientProps) {
                   </button>
                 );
               })}
-              {secondarySections.map((s) => {
-                const Icon = getIconByName(s.icon);
-                const isActive = s.id === activeSectionId;
-                return (
-                  <button key={s.id} onClick={() => handleSelectSection(s.id)}
-                    className={`flex items-center justify-center gap-1 py-1.5 px-2 rounded-lg
-                      text-[11px] font-bold transition-all duration-200 ${
-                      isActive ? "text-[--text-primary] shadow-sm" : "text-[--text-muted]"
-                    }`}
-                    style={isActive ? { background: "var(--bg-sidebar)" } : {}}>
-                    <span style={isActive ? { color: s.color } : {}}>
-                      <Icon className="w-3.5 h-3.5 shrink-0" />
-                    </span>
-                  </button>
-                );
-              })}
             </div>
           </div>
         </div>
 
-        <div className="flex-1 min-h-0 overflow-hidden">
+        <div className="flex-1 min-h-0 overflow-y-auto lg:overflow-hidden">
           {selection && selectedCategory && activeSection ? (
             <ItemViewer
               key={`${selection.sectionId}-${selection.categoryId}-${selection.item.id}`}

@@ -174,7 +174,7 @@ export default function ItemViewer({ item, category, section }: ItemViewerProps)
   };
 
   return (
-    <div className="flex flex-col h-full overflow-hidden bg-[--bg]">
+    <div className="flex flex-col min-h-full lg:h-full lg:overflow-hidden bg-[--bg]">
       {/* Accent line */}
       <div className="flex-none h-px"
         style={{ background: `linear-gradient(90deg, transparent, ${category.color}, ${section.color}, transparent)` }}
@@ -337,7 +337,7 @@ export default function ItemViewer({ item, category, section }: ItemViewerProps)
       )}
 
       {/* ── Content area ────────────────────────── */}
-      <div className="flex-1 min-h-0 overflow-y-auto">
+      <div className="lg:flex-1 lg:min-h-0 lg:overflow-y-auto">
         {viewMode === "markdown" ? (
           /* ── Markdown view ── */
           <div key="markdown" className="animate-fade-slide p-3 sm:p-6">

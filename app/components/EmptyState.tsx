@@ -15,7 +15,7 @@ export default function EmptyState({ section, onSelectItem }: EmptyStateProps) {
   );
 
   return (
-    <div className="flex flex-col items-center justify-center h-full px-8 py-16 text-center bg-[--bg]">
+    <div className="flex flex-col items-center justify-center min-h-full px-8 py-16 text-center bg-[--bg]">
       {/* Icon */}
       <div className="relative mb-6">
         <div
