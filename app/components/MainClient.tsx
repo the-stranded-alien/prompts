@@ -44,8 +44,6 @@ export default function MainClient({ sections }: MainClientProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const primarySections   = sections.filter((s) => s.primary);
   const secondarySections = sections.filter((s) => !s.primary);
-  const activeIsSecondary = secondarySections.some((s) => s.id === activeSectionId);
-  const [moreOpen, setMoreOpen] = useState(activeIsSecondary);
 
   const activeSection = sections.find((s) => s.id === activeSectionId) ?? sections[0];
 
@@ -150,55 +148,54 @@ export default function MainClient({ sections }: MainClientProps) {
             })}
           </div>
 
-          {/* Secondary sections — "More" collapsible */}
+          {/* Secondary sections — always visible, stacked */}
           {secondarySections.length > 0 && (
-            <div className="mt-2">
-              <button
-                onClick={() => setMoreOpen((v) => !v)}
-                className="w-full flex items-center gap-1.5 px-2 py-1 rounded-lg text-[10px] font-bold
-                  uppercase tracking-widest text-[--text-muted] hover:text-[--text-secondary]
-                  hover:bg-[--bg-elevated] transition-all duration-150"
-              >
-                <span className={`transition-transform duration-200 ${moreOpen ? "rotate-90" : ""}`}>›</span>
-                More
-                <span className="ml-auto text-[9px] font-mono text-[--text-muted]">
-                  {secondarySections.length} sections
-                </span>
-              </button>
-
-              {moreOpen && (
-                <div className="mt-1 flex flex-col gap-0.5 animate-fade-slide">
-                  {secondarySections.map((s) => {
-                    const Icon = getIconByName(s.icon);
-                    const isActive = s.id === activeSectionId;
-                    const sectionCount = s.categories.reduce((sum, c) => sum + c.items.length, 0);
-                    return (
-                      <button
-                        key={s.id}
-                        onClick={() => handleSelectSection(s.id)}
-                        className={`flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-[11px] font-semibold
-                          transition-all duration-150 ${
-                          isActive
-                            ? "text-[--text-primary]"
-                            : "text-[--text-muted] hover:text-[--text-secondary] hover:bg-[--bg-elevated]"
-                        }`}
-                        style={isActive ? { background: "var(--bg-elevated)" } : {}}
-                      >
-                        <span style={{ color: isActive ? s.color : undefined }}>
-                          <Icon className="w-3.5 h-3.5 shrink-0" />
-                        </span>
-                        <span>{s.name}</span>
-                        <span
-                          className="ml-auto text-[9px] font-mono tabular-nums px-1 py-px rounded"
-                          style={{ background: `${s.color}14`, color: s.color }}
-                        >
-                          {sectionCount}
-                        </span>
-                      </button>
-                    );
-                  })}
-                </div>
-              )}
+            <div className="mt-2 flex flex-col gap-1">
+              {secondarySections.map((s) => {
+                const Icon = getIconByName(s.icon);
+                const isActive = s.id === activeSectionId;
+                const count = s.categories.reduce((sum, c) => sum + c.items.length, 0);
+                return (
+                  <button
+                    key={s.id}
+                    onClick={() => handleSelectSection(s.id)}
+                    className="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-[11px]
+                      font-semibold transition-all duration-150 border"
+                    style={isActive ? {
+                      background: `${s.color}0e`,
+                      borderColor: `${s.color}28`,
+                      color: "var(--text-primary)",
+                    } : {
+                      background: "transparent",
+                      borderColor: "var(--border)",
+                      color: "var(--text-muted)",
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!isActive) {
+                        (e.currentTarget as HTMLButtonElement).style.borderColor = "var(--border-hover)";
+                        (e.currentTarget as HTMLButtonElement).style.color = "var(--text-secondary)";
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!isActive) {
+                        (e.currentTarget as HTMLButtonElement).style.borderColor = "var(--border)";
+                        (e.currentTarget as HTMLButtonElement).style.color = "var(--text-muted)";
+                      }
+                    }}
+                  >
+                    <span style={{ color: isActive ? s.color : "inherit" }} className="shrink-0">
+                      <Icon className="w-3.5 h-3.5" />
+                    </span>
+                    <span className="flex-1 text-left">{s.name}</span>
+                    <span
+                      className="text-[9px] font-mono tabular-nums px-1.5 py-0.5 rounded-full shrink-0"
+                      style={{ background: `${s.color}14`, color: s.color }}
+                    >
+                      {count}
+                    </span>
+                  </button>
+                );
+              })}
             </div>
           )}
         </div>
