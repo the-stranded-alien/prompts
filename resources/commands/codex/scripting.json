@@ -1,0 +1,33 @@
+{
+  "type": "reference",
+  "intro": "Automate bulk code tasks by scripting Codex across files, packages, and repos.",
+  "sections": [
+    {
+      "variant": "code",
+      "title": "Process Multiple Files",
+      "language": "bash",
+      "code": "#!/bin/bash\n# Add missing return types to TypeScript files, one by one\n\nFILES=$(find src -name \"*.ts\" -not -path \"*/node_modules/*\" -not -name \"*.d.ts\")\n\nfor FILE in $FILES; do\n  echo \"Processing $FILE...\"\n  codex --approval-mode full-auto --quiet \\\n    \"Add explicit TypeScript return types to all functions in $FILE \\\n     that are missing them. Do not change any logic.\"\n\n  # Revert if type-check fails\n  npx tsc --noEmit 2>&1 | grep -q \"error\" && \\\n    echo \"Type error in $FILE — reverting\" && git checkout \"$FILE\"\ndone\n\necho \"Done. Review: git diff\""
+    },
+    {
+      "variant": "code",
+      "title": "Apply the Same Change Across Repos",
+      "language": "bash",
+      "code": "#!/bin/bash\nREPOS=(\"~/projects/api\" \"~/projects/worker\" \"~/projects/frontend\")\nTASK=\"Add error handling to all fetch() calls — wrap in try/catch\"\n\nfor REPO in \"${REPOS[@]}\"; do\n  cd \"$REPO\" || continue\n  git checkout -b \"codex/error-handling-$(date +%Y%m%d)\"\n  codex --approval-mode full-auto --quiet \"$TASK\"\n  npm test && git commit -am \"feat: add error handling\" || echo \"Tests failed in $REPO\"\n  cd - > /dev/null\ndone"
+    },
+    {
+      "variant": "code",
+      "title": "Generate Tests for Untested Files",
+      "language": "bash",
+      "code": "#!/bin/bash\n# Find files with no corresponding test\nfor FILE in $(find src/lib -name \"*.ts\" -not -name \"*.test.ts\"); do\n  TEST=\"${FILE%.ts}.test.ts\"\n  [ -f \"$TEST\" ] && continue\n\n  echo \"Generating tests for $FILE...\"\n  codex --approval-mode full-auto \\\n    \"Write a Jest test file for $FILE. Save it to $TEST.\n     Cover: happy path, error cases, edge cases.\"\ndone"
+    },
+    {
+      "variant": "tips",
+      "title": "Scripting Safety Checklist",
+      "items": [
+        { "title": "Always branch first", "body": "git checkout -b codex/task-name before any automated Codex run. git checkout . to reset if things go wrong.", "type": "warning" },
+        { "title": "Gate every step with tests", "body": "codex '...' && npm test || (git checkout . && exit 1) — never let broken code accumulate.", "type": "good" },
+        { "title": "Keep tasks hardcoded, not from input", "body": "Never pipe untrusted user input into TASK=... Task strings should be literals or sanitised variables.", "type": "bad" }
+      ]
+    }
+  ]
+}

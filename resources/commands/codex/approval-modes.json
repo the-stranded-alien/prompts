@@ -1,0 +1,48 @@
+{
+  "type": "reference",
+  "intro": "Codex has three approval modes that control how much it does autonomously vs. how much it asks you to confirm.",
+  "sections": [
+    {
+      "variant": "cards",
+      "title": "The Three Modes",
+      "items": [
+        {
+          "badge": "suggest",
+          "badgeColor": "#38bdf8",
+          "title": "Suggest — Safest",
+          "subtitle": "codex --approval-mode suggest",
+          "body": "Codex shows you what it wants to do — you decide whether to apply each change. Best for unfamiliar codebases, high-stakes changes (auth, payments, migrations), or when you want to learn from the approach."
+        },
+        {
+          "badge": "auto-edit",
+          "badgeColor": "#a78bfa",
+          "title": "Auto-edit — Recommended Default",
+          "subtitle": "codex --approval-mode auto-edit",
+          "body": "File edits apply automatically; shell commands still need your approval. Best for day-to-day coding in your own codebase — you trust the edits but want control over side effects like installs or test runs."
+        },
+        {
+          "badge": "full-auto",
+          "badgeColor": "#f97316",
+          "title": "Full-auto — Fastest",
+          "subtitle": "codex --approval-mode full-auto",
+          "body": "Everything runs without prompting — reads, writes, and shell commands. Best for CI/CD pipelines, scripted automation, and trusted well-defined tasks. Always use in a git branch, never on main."
+        }
+      ]
+    },
+    {
+      "variant": "tips",
+      "title": "Choosing the Right Mode",
+      "items": [
+        { "title": "New or unfamiliar codebase?", "body": "Use suggest. You want to see every change before it lands.", "type": "info" },
+        { "title": "Routine task in your own project?", "body": "Use auto-edit. Safe default for most day-to-day work.", "type": "good" },
+        { "title": "CI pipeline or scripted automation?", "body": "Use full-auto — but always gate with tests afterwards: codex --approval-mode full-auto '...' && npm test", "type": "warning" }
+      ]
+    },
+    {
+      "variant": "code",
+      "title": "Setting a Default",
+      "language": "bash",
+      "code": "# In your shell profile (~/.zshrc or ~/.bashrc)\nexport CODEX_APPROVAL_MODE=auto-edit"
+    }
+  ]
+}

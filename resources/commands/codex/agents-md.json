@@ -1,0 +1,31 @@
+{
+  "type": "reference",
+  "intro": "AGENTS.md (or CODEX.md) is read automatically before every Codex task. It's your persistent project context — prevents style-inconsistent and uninformed edits.",
+  "sections": [
+    {
+      "variant": "table",
+      "title": "File Name Priority",
+      "columns": ["File", "Notes"],
+      "rows": [
+        ["AGENTS.md",              "Preferred — checked first"],
+        ["CODEX.md",               "Fallback"],
+        ["--project-doc <path>",   "Custom path via CLI flag — overrides both"]
+      ]
+    },
+    {
+      "variant": "code",
+      "title": "Full Template",
+      "language": "markdown",
+      "code": "# Project: [Name]\n\n## Stack\n- Language: TypeScript 5.x (strict mode)\n- Framework: Next.js 14 (App Router)\n- Database: PostgreSQL via Prisma ORM\n- Testing: Jest + Testing Library\n\n## Commands\nnpm run dev          # development server\nnpm test             # run all tests\nnpm run lint         # eslint check\nnpm run typecheck    # tsc --noEmit\nnpm run build        # production build\n\n## Coding Style\n- 2-space indentation, single quotes, semicolons\n- Named exports only — no default exports\n- TypeScript strict — no `any` allowed\n\n## Architecture Rules\n- All database queries go through `src/lib/db.ts`\n- API routes: return `{ data: T }` or `{ error: string }`\n- Validate all user input with zod before DB operations\n\n## What NOT to Do\n- Do not use `any` — use `unknown` and narrow\n- Do not write `console.log` in production code\n- Do not modify `prisma/migrations/` manually\n\n## Packages to Prefer\n- Dates: `dayjs` (not `date-fns`, not native `Date`)\n- HTTP: native `fetch` (not `axios`)\n- Validation: `zod`"
+    },
+    {
+      "variant": "tips",
+      "title": "Writing Effective AGENTS.md",
+      "items": [
+        { "title": "Be specific about one-right-way rules", "body": "'Use dayjs not date-fns' is more valuable than 'handle dates carefully'. Concrete rules prevent the most common regressions.", "type": "good" },
+        { "title": "List what NOT to do", "body": "Codex has strong opinions. Knowing your forbidden patterns prevents regressions better than stating the preferred pattern alone.", "type": "good" },
+        { "title": "Keep it under 300 lines", "body": "Codex reads the whole file before each task. Very long files dilute focus — prioritise the rules that catch the most errors.", "type": "info" }
+      ]
+    }
+  ]
+}

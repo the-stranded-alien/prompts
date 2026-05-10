@@ -1,0 +1,58 @@
+{
+  "type": "reference",
+  "intro": "Hooks are shell commands that fire automatically at lifecycle events — they run outside Claude, in your shell, so they execute even mid-task.",
+  "sections": [
+    {
+      "variant": "table",
+      "title": "Hook Events",
+      "columns": ["Event", "Fires When", "Common Use"],
+      "rows": [
+        ["PreToolUse",    "Before any tool call",         "Block risky commands, validate inputs"],
+        ["PostToolUse",   "After any tool call",          "Run linter, log actions, run tests"],
+        ["Stop",          "When Claude finishes",         "Desktop notification, run test suite"],
+        ["Notification",  "On agent notification",       "Slack ping, custom alert"]
+      ]
+    },
+    {
+      "variant": "code",
+      "title": "Auto-lint on Every File Write",
+      "language": "json",
+      "code": "{\n  \"hooks\": {\n    \"PostToolUse\": [{\n      \"matcher\": \"Write|Edit\",\n      \"hooks\": [{\n        \"type\": \"command\",\n        \"command\": \"npx eslint --fix \\\"$CLAUDE_TOOL_OUTPUT_PATH\\\" 2>/dev/null || true\"\n      }]\n    }]\n  }\n}"
+    },
+    {
+      "variant": "code",
+      "title": "Run Tests After Code Changes",
+      "language": "json",
+      "code": "{\n  \"hooks\": {\n    \"PostToolUse\": [{\n      \"matcher\": \"Write|Edit\",\n      \"hooks\": [{\n        \"type\": \"command\",\n        \"command\": \"npm test -- --passWithNoTests --bail 2>&1 | tail -5\"\n      }]\n    }]\n  }\n}"
+    },
+    {
+      "variant": "code",
+      "title": "Desktop Notification When Claude Stops",
+      "description": "macOS. For Linux use: notify-send 'Claude Code' 'Task complete'",
+      "language": "json",
+      "code": "{\n  \"hooks\": {\n    \"Stop\": [{\n      \"hooks\": [{\n        \"type\": \"command\",\n        \"command\": \"osascript -e 'display notification \\\"Task complete\\\" with title \\\"Claude Code\\\" sound name \\\"Glass\\\"'\"\n      }]\n    }]\n  }\n}"
+    },
+    {
+      "variant": "code",
+      "title": "Block Dangerous Bash Commands",
+      "language": "json",
+      "code": "{\n  \"hooks\": {\n    \"PreToolUse\": [{\n      \"matcher\": \"Bash\",\n      \"hooks\": [{\n        \"type\": \"command\",\n        \"command\": \"echo \\\"$CLAUDE_TOOL_INPUT\\\" | python3 -c \\\"import sys,json; cmd=json.load(sys.stdin).get('command',''); exit(1 if any(p in cmd for p in ['rm -rf /', 'DROP TABLE']) else 0)\\\"\"\n      }]\n    }]\n  }\n}"
+    },
+    {
+      "variant": "code",
+      "title": "TypeScript Type-Check After Edits",
+      "language": "json",
+      "code": "{\n  \"hooks\": {\n    \"PostToolUse\": [{\n      \"matcher\": \"Write|Edit\",\n      \"hooks\": [{\n        \"type\": \"command\",\n        \"command\": \"npx tsc --noEmit 2>&1 | grep 'error TS' | head -5\"\n      }]\n    }]\n  }\n}"
+    },
+    {
+      "variant": "table",
+      "title": "Hook Environment Variables",
+      "columns": ["Variable", "Contains"],
+      "rows": [
+        ["CLAUDE_TOOL_NAME",   "Name of the tool being called"],
+        ["CLAUDE_TOOL_INPUT",  "JSON-encoded tool input parameters"],
+        ["CLAUDE_TOOL_OUTPUT", "JSON-encoded tool output (PostToolUse only)"]
+      ]
+    }
+  ]
+}

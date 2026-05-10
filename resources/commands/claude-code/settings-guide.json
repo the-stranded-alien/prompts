@@ -1,0 +1,58 @@
+{
+  "type": "reference",
+  "intro": "Complete settings reference for Claude Code. Later files override earlier ones — settings.local.json always wins.",
+  "sections": [
+    {
+      "variant": "table",
+      "title": "Config File Locations",
+      "columns": ["File", "Scope", "Use For"],
+      "rows": [
+        ["~/.claude/settings.json",        "Global (all projects)", "Personal preferences, global tools, global permissions"],
+        [".claude/settings.json",          "Project (shared, git-tracked)", "Team-shared project config, MCP servers"],
+        [".claude/settings.local.json",    "Project (local, gitignored)", "Personal overrides per project"]
+      ]
+    },
+    {
+      "variant": "code",
+      "title": "Core Settings",
+      "language": "json",
+      "code": "{\n  \"model\": \"claude-sonnet-4-6\",\n  \"theme\": \"dark\",\n  \"verbose\": false,\n  \"autoUpdates\": true,\n  \"permissions\": {\n    \"allow\": [],\n    \"deny\": []\n  },\n  \"hooks\": {},\n  \"mcpServers\": {},\n  \"env\": {}\n}"
+    },
+    {
+      "variant": "table",
+      "title": "Permission Modes (CLI flags)",
+      "columns": ["Flag", "Mode", "Behaviour"],
+      "rows": [
+        ["(default)",                                  "Normal",      "Asks before tools with side effects"],
+        ["--dangerously-skip-permissions",             "Auto-approve","Never prompts — trusted automation only"],
+        ["--no-tools",                                 "Read-only",   "No tool calls, pure chat mode"]
+      ]
+    },
+    {
+      "variant": "code",
+      "title": "Allow / Deny Specific Tools",
+      "description": "Eliminate repetitive permission prompts for safe operations.",
+      "language": "json",
+      "code": "{\n  \"permissions\": {\n    \"allow\": [\n      \"Bash(npm test:*)\",\n      \"Bash(git log:*)\",\n      \"Bash(git diff:*)\",\n      \"Read\",\n      \"mcp__postgres__query\"\n    ],\n    \"deny\": [\n      \"Bash(rm -rf:*)\",\n      \"Bash(git push --force:*)\"\n    ]\n  }\n}",
+      "note": "Pattern syntax: Tool — whole tool. Tool(prefix:*) — Bash prefix match. mcp__server__tool — specific MCP tool."
+    },
+    {
+      "variant": "table",
+      "title": "Model Selection",
+      "columns": ["Model ID", "Best For"],
+      "rows": [
+        ["claude-opus-4-7",           "Complex reasoning, large codebases, architecture decisions"],
+        ["claude-sonnet-4-6",         "Balanced — default for most everyday tasks"],
+        ["claude-haiku-4-5-20251001", "Fast iteration, simple edits, quick lookups"]
+      ]
+    },
+    {
+      "variant": "code",
+      "title": "Environment Variables",
+      "description": "Inject env vars into every Claude Code session.",
+      "language": "json",
+      "code": "{\n  \"env\": {\n    \"NODE_ENV\": \"development\",\n    \"DATABASE_URL\": \"${DATABASE_URL}\"\n  }\n}",
+      "note": "${VAR} reads the value from your shell environment at startup."
+    }
+  ]
+}

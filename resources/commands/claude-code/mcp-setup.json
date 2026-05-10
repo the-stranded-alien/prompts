@@ -1,0 +1,44 @@
+{
+  "type": "reference",
+  "intro": "MCP (Model Context Protocol) lets Claude Code call tools from external servers — databases, APIs, and custom services. Tools appear in Claude's tool list just like built-in tools.",
+  "sections": [
+    {
+      "variant": "code",
+      "title": "Quick Setup",
+      "language": "bash",
+      "code": "# Add a server via CLI\nclaude mcp add postgres -- npx -y @modelcontextprotocol/server-postgres \\\n  --env POSTGRES_URL=\"$DATABASE_URL\"\n\n# List active servers\nclaude mcp list\n\n# Remove a server\nclaude mcp remove postgres"
+    },
+    {
+      "variant": "table",
+      "title": "Popular MCP Servers",
+      "columns": ["Server", "Package", "What it enables"],
+      "rows": [
+        ["PostgreSQL",   "@modelcontextprotocol/server-postgres",      "Query tables, describe schema, list databases"],
+        ["GitHub",       "@modelcontextprotocol/server-github",         "List PRs, read diffs, create issues, search code"],
+        ["Filesystem",   "@modelcontextprotocol/server-filesystem",     "Scoped read/write access to allowed directories"],
+        ["Brave Search", "@modelcontextprotocol/server-brave-search",   "Real-time web search"],
+        ["Slack",        "@modelcontextprotocol/server-slack",          "Read channels, post messages"]
+      ]
+    },
+    {
+      "variant": "code",
+      "title": "settings.json Config (GitHub example)",
+      "language": "json",
+      "code": "{\n  \"mcpServers\": {\n    \"github\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-github\"],\n      \"env\": {\n        \"GITHUB_TOKEN\": \"${GITHUB_TOKEN}\"\n      }\n    }\n  }\n}"
+    },
+    {
+      "variant": "code",
+      "title": "Scope Control — Limit Which Tools Auto-Approve",
+      "language": "json",
+      "code": "{\n  \"permissions\": {\n    \"allow\": [\n      \"mcp__postgres__query\",\n      \"mcp__github__list_pull_requests\",\n      \"mcp__github__get_pull_request\"\n    ],\n    \"deny\": [\n      \"mcp__postgres__execute\",\n      \"mcp__github__push\"\n    ]\n  }\n}"
+    },
+    {
+      "variant": "code",
+      "title": "Minimal Custom MCP Server",
+      "description": "Register any tool in Node.js in under 30 lines.",
+      "language": "javascript",
+      "code": "import { Server } from \"@modelcontextprotocol/sdk/server/index.js\";\nconst server = new Server({ name: \"my-tools\", version: \"1.0.0\" });\n\nserver.setRequestHandler(\"tools/list\", async () => ({\n  tools: [{\n    name: \"my_tool\",\n    description: \"Does something useful\",\n    inputSchema: { type: \"object\", properties: { input: { type: \"string\" } } }\n  }]\n}));\n\nserver.setRequestHandler(\"tools/call\", async (req) => ({\n  content: [{ type: \"text\", text: `Result: ${req.params.arguments.input}` }]\n}));",
+      "note": "Register with: claude mcp add my-tools -- node /path/to/server.js"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "type": "reference",
+  "intro": "Codex and Claude Code are complementary tools — different strengths for different moments in your workflow.",
+  "sections": [
+    {
+      "variant": "table",
+      "title": "Side-by-Side Comparison",
+      "columns": ["Dimension", "Claude Code", "Codex"],
+      "rows": [
+        ["Provider",        "Anthropic",                    "OpenAI"],
+        ["Interface",       "Interactive CLI chat",         "CLI with approval modes"],
+        ["Context file",    "CLAUDE.md",                    "AGENTS.md / CODEX.md"],
+        ["Best at",         "Complex reasoning, large context", "Precise code edits, CI automation"],
+        ["Conversation",    "Full multi-turn chat",         "Task-focused, less chatty"],
+        ["MCP tools",       "Native support",              "Not available"],
+        ["Hooks",           "Rich lifecycle hooks",         "Not available"],
+        ["IDE integration", "VS Code, JetBrains",          "VS Code"],
+        ["Image input",     "Yes",                          "Yes"]
+      ]
+    },
+    {
+      "variant": "tips",
+      "title": "When to Use Each",
+      "items": [
+        { "title": "Reach for Claude Code when...", "body": "You need complex multi-step reasoning, architectural decisions, large codebase exploration, MCP tool integration, or want a conversational back-and-forth to refine ideas.", "type": "info" },
+        { "title": "Reach for Codex when...", "body": "You need precise bounded edits, CI/CD automation in full-auto mode, bulk changes across many files, or scripted pipelines that run without human interaction.", "type": "info" },
+        { "title": "Use both together", "body": "Claude Code: plan and design. Codex: implement the mechanical parts. Claude Code: review the changes with /review. Codex: fix the issues.", "type": "good" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "type": "reference",
+  "intro": "Extended thinking gives Claude a private scratchpad to reason deeply before answering. It dramatically improves quality for hard, multi-step problems.",
+  "sections": [
+    {
+      "variant": "table",
+      "title": "When to Use It",
+      "columns": ["Use Extended Thinking", "Skip It"],
+      "rows": [
+        ["Architectural decisions with long-term consequences",  "Simple factual lookups"],
+        ["Hard intermittent or concurrency bugs",               "Routine code edits or formatting"],
+        ["Security-sensitive design review",                    "Translation or paraphrasing"],
+        ["Complex refactors with many moving parts",            "Short, well-defined tasks"],
+        ["Algorithm design where correctness matters",          "Tasks where speed matters more than depth"]
+      ]
+    },
+    {
+      "variant": "tips",
+      "title": "How to Trigger It",
+      "items": [
+        { "title": "Simple trigger", "body": "\"Think carefully about the best approach before writing any code.\" or \"Before answering, reason through all the tradeoffs and edge cases.\"", "type": "good" },
+        { "title": "Directed trigger", "body": "\"Before recommending an architecture, think through: 1. What happens at 10x load? 2. What are the failure modes? 3. What's the operational complexity?\"", "type": "good" },
+        { "title": "Multiple options", "body": "\"Reason through three different approaches, evaluate each, then recommend the best with a clear rationale.\"", "type": "good" }
+      ]
+    },
+    {
+      "variant": "code",
+      "title": "Via the API",
+      "language": "python",
+      "code": "client.messages.create(\n    model=\"claude-opus-4-7\",\n    max_tokens=16000,\n    thinking={\n        \"type\": \"enabled\",\n        \"budget_tokens\": 10000\n    },\n    messages=[{\"role\": \"user\", \"content\": \"Design the sharding strategy...\"}]\n)"
+    },
+    {
+      "variant": "table",
+      "title": "Token Budget Guide",
+      "columns": ["Budget", "Use Case"],
+      "rows": [
+        ["1,000–5,000",   "Moderate reasoning — most everyday problems"],
+        ["5,000–15,000",  "Hard multi-step problems, architecture reviews"],
+        ["15,000–32,000", "Extremely complex, research-grade reasoning"]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "type": "reference",
+  "intro": "Every built-in slash command available in Claude Code. Type / in the prompt to autocomplete.",
+  "sections": [
+    {
+      "variant": "commands",
+      "title": "Core",
+      "items": [
+        { "cmd": "/help",    "desc": "Show all available slash commands and shortcuts", "badge": "core" },
+        { "cmd": "/clear",   "desc": "Clear conversation history — starts fresh while keeping project context", "badge": "core" },
+        { "cmd": "/compact", "desc": "Compress conversation history to free up context space for long sessions" },
+        { "cmd": "/status",  "desc": "Show current model, token usage, and session info" },
+        { "cmd": "/exit",    "desc": "End the Claude Code session", "example": "/quit also works" }
+      ]
+    },
+    {
+      "variant": "commands",
+      "title": "Code & Review",
+      "items": [
+        { "cmd": "/review",           "desc": "Full multi-layer code review of the current branch vs main", "badge": "power", "example": "/review PR#123" },
+        { "cmd": "/security-review",  "desc": "Security-focused audit of all changed code on the current branch" },
+        { "cmd": "/init",             "desc": "Generate a CLAUDE.md for the current project with detected conventions" }
+      ]
+    },
+    {
+      "variant": "commands",
+      "title": "Configuration",
+      "items": [
+        { "cmd": "/config",          "desc": "Open the interactive settings menu (model, theme, permissions)", "badge": "core" },
+        { "cmd": "/config model",    "desc": "Switch the active model for the current session" },
+        { "cmd": "/config theme",    "desc": "Switch between light, dark, and system themes" },
+        { "cmd": "/mcp",             "desc": "List all active MCP servers and their available tools" },
+        { "cmd": "/permissions",     "desc": "View and edit the current allow/deny permission rules" }
+      ]
+    },
+    {
+      "variant": "commands",
+      "title": "Context Loading",
+      "description": "Prefix with # to load files or folders into context before your message.",
+      "items": [
+        { "cmd": "#filename",    "desc": "Load a specific file into context", "example": "#src/api/users.ts explain this" },
+        { "cmd": "#folder/",     "desc": "Load all files in a folder into context", "example": "#src/lib/ refactor this module" },
+        { "cmd": "! command",    "desc": "Run a shell command and pipe the output into the conversation", "example": "! git log --oneline -10" }
+      ]
+    },
+    {
+      "variant": "tips",
+      "title": "Power Patterns",
+      "items": [
+        { "title": "Load context first", "body": "Type #src/lib/auth.ts before your request so Claude reads the file immediately rather than spending a tool call discovering it.", "type": "good" },
+        { "title": "Chain commands", "body": "Run /review, read the output, then say 'implement the must-fix items' — Claude carries the context forward.", "type": "good" },
+        { "title": "Custom commands", "body": "Create .claude/commands/deploy.md to define a /deploy command with your team's deploy checklist.", "type": "info" }
+      ]
+    }
+  ]
+}

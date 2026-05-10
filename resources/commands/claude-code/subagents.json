@@ -1,0 +1,33 @@
+{
+  "type": "reference",
+  "intro": "Spawn specialised subagents and run independent tasks in parallel using git worktrees.",
+  "sections": [
+    {
+      "variant": "table",
+      "title": "Subagent Types",
+      "columns": ["Type", "Best For"],
+      "rows": [
+        ["Explore",          "Fast read-only search, file discovery, symbol lookup across the codebase"],
+        ["general-purpose",  "Multi-step research, complex investigations, open-ended analysis"],
+        ["Plan",             "Architecture design, implementation planning, trade-off analysis"],
+        ["claude-code-guide","Claude Code CLI, API, SDK, and MCP questions"]
+      ]
+    },
+    {
+      "variant": "code",
+      "title": "Parallel Worktrees — Run Two Sessions Simultaneously",
+      "description": "The most powerful pattern: each session works on its own branch with no file conflicts.",
+      "language": "bash",
+      "code": "# Create isolated worktrees for two independent features\ngit worktree add ../my-app-feature-auth     -b feature/auth\ngit worktree add ../my-app-feature-billing  -b feature/billing\n\n# Open a terminal in each and start Claude Code\ncd ../my-app-feature-auth    && claude\ncd ../my-app-feature-billing && claude\n\n# When done, clean up\ngit worktree remove ../my-app-feature-auth\ngit branch -d feature/auth"
+    },
+    {
+      "variant": "tips",
+      "title": "Prompting for Parallel Work",
+      "items": [
+        { "title": "Tell Claude tasks are independent", "body": "Say 'Run these two tasks in parallel: 1. ... 2. ...' Claude will fire two Agent tool calls in the same message and synthesise results when both return.", "type": "good" },
+        { "title": "Self-contained subagent briefs", "body": "Subagents start cold with no shared memory. Include file paths, function names, and exactly what format to return results in.", "type": "info" },
+        { "title": "Read-only by default", "body": "For research subagents, specify 'read only, do not make any changes'. This keeps the exploration safe.", "type": "warning" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "type": "reference",
+  "intro": "Create markdown files in .claude/commands/ to define your own /commands for repeatable workflows. Use $ARGUMENTS to accept input after the command name.",
+  "sections": [
+    {
+      "variant": "code",
+      "title": "File Structure",
+      "language": "bash",
+      "code": ".claude/\n  commands/\n    deploy.md      →  /deploy\n    check.md       →  /check\n    pr.md          →  /pr <context>\n\n~/.claude/commands/  →  global commands (available everywhere)"
+    },
+    {
+      "variant": "code",
+      "title": "Basic Command — /check",
+      "description": ".claude/commands/check.md",
+      "language": "markdown",
+      "code": "Run the full pre-commit checklist:\n1. `npm run lint` — fix any errors found\n2. `npm run typecheck` — fix any type errors\n3. `npm test` — confirm all tests pass\n4. `git diff` — show me a summary of what changed\n\nIf any step fails, fix it before moving on."
+    },
+    {
+      "variant": "code",
+      "title": "Command with Arguments — /pr",
+      "description": "$ARGUMENTS is replaced by whatever you type after the command name.",
+      "language": "markdown",
+      "code": "Create a pull request for the current branch.\nContext: $ARGUMENTS\n\n1. Run `git log main..HEAD --oneline` to see all commits\n2. Run `git diff main...HEAD --stat` to see changed files\n3. Write a PR title (under 70 chars) and body with summary + test plan\n4. Run `gh pr create` with the title and body"
+    },
+    {
+      "variant": "tips",
+      "title": "Real-World Command Ideas",
+      "items": [
+        { "title": "/standup", "body": "Run git log --since='24 hours ago' --author=\"$(git config user.name)\" --oneline and format as Yesterday / Today / Blockers.", "type": "info" },
+        { "title": "/security", "body": "Get git diff main...HEAD, then check each changed file for hardcoded secrets, SQL injection, missing auth guards. Report by severity.", "type": "info" },
+        { "title": "/release $ARGUMENTS", "body": "Check CHANGELOG, run tests, bump version in package.json to $ARGUMENTS, create git tag, show completion checklist.", "type": "info" }
+      ]
+    }
+  ]
+}

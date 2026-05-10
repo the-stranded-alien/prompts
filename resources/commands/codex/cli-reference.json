@@ -1,0 +1,47 @@
+{
+  "type": "reference",
+  "intro": "Complete CLI reference for the OpenAI Codex agent. Install with: npm install -g @openai/codex",
+  "sections": [
+    {
+      "variant": "code",
+      "title": "Basic Usage",
+      "language": "bash",
+      "code": "codex \"fix the TypeScript errors in src/api/users.ts\"\ncodex --approval-mode auto-edit \"add input validation to all API routes\"\ncodex --quiet \"run the test suite and show failing tests\"\n\n# Task from stdin\necho \"add jsdoc to all exported functions\" | codex"
+    },
+    {
+      "variant": "table",
+      "title": "Core Flags",
+      "columns": ["Flag", "Short", "Description"],
+      "rows": [
+        ["--approval-mode",                           "-a", "suggest | auto-edit | full-auto (default: suggest)"],
+        ["--model",                                   "-m", "Model to use (default: codex-1)"],
+        ["--quiet",                                   "-q", "Suppress non-essential output — good for CI"],
+        ["--no-project-doc",                          "",   "Skip reading AGENTS.md / CODEX.md"],
+        ["--project-doc <path>",                      "",   "Use a custom context file instead of AGENTS.md"],
+        ["--notify",                                  "-n", "Desktop notification on task completion"],
+        ["--dangerously-auto-approve-everything",     "",   "Full auto with zero confirmations — CI use only"],
+        ["--help",                                    "-h", "Show all available flags"]
+      ]
+    },
+    {
+      "variant": "table",
+      "title": "Environment Variables",
+      "columns": ["Variable", "Purpose"],
+      "rows": [
+        ["OPENAI_API_KEY",    "Required — your OpenAI API key"],
+        ["CODEX_MODEL",       "Default model override (replaces --model)"],
+        ["CODEX_APPROVAL_MODE", "Default approval mode for all sessions"]
+      ]
+    },
+    {
+      "variant": "table",
+      "title": "Exit Codes",
+      "columns": ["Code", "Meaning"],
+      "rows": [
+        ["0", "Success — task completed"],
+        ["1", "Task failed or was rejected"],
+        ["2", "Configuration or authentication error"]
+      ]
+    }
+  ]
+}

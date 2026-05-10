@@ -6,6 +6,7 @@ import remarkGfm from "remark-gfm";
 import type { Components } from "react-markdown";
 import { Section, Category, Item } from "../types";
 import { CopyIcon, CheckIcon, SlidersIcon, ChevronDownIcon, EyeIcon, TerminalIcon, getIconByName } from "./Icons";
+import ReferenceViewer, { ReferenceData } from "./ReferenceViewer";
 
 interface ItemViewerProps {
   item: Item;
@@ -64,6 +65,19 @@ export default function ItemViewer({ item, category, section }: ItemViewerProps)
   const [viewMode, setViewMode] = useState<ViewMode>("markdown");
 
   const content      = item.content ?? "";
+
+  // Detect structured JSON reference content
+  const refData = useMemo<ReferenceData | null>(() => {
+    try {
+      const trimmed = content.trimStart();
+      if (!trimmed.startsWith("{")) return null;
+      const parsed = JSON.parse(content);
+      return parsed?.type === "reference" ? (parsed as ReferenceData) : null;
+    } catch {
+      return null;
+    }
+  }, [content]);
+
   const vars         = useMemo(() => extractVars(content), [content]);
   const filledCount  = vars.filter((v) => values[v]).length;
   const forPreview   = useMemo(() => processForPreview(content, values),  [content, values]);
@@ -212,35 +226,36 @@ export default function ItemViewer({ item, category, section }: ItemViewerProps)
 
           {/* Actions */}
           <div className="flex items-center gap-2 sm:shrink-0">
-            {/* Sliding Markdown | Preview toggle */}
-            <div className="relative flex p-1 rounded-xl border border-[--border]"
-              style={{ background: "var(--bg-elevated)" }}>
-              {/* Sliding indicator */}
-              <div
-                className="absolute top-1 bottom-1 rounded-lg transition-all duration-200 ease-in-out"
-                style={{
-                  background: "var(--bg-sidebar)",
-                  boxShadow: "0 1px 6px rgba(0,0,0,0.12)",
-                  left:  viewMode === "markdown" ? "4px" : "calc(50% + 0px)",
-                  width: "calc(50% - 4px)",
-                }}
-              />
-              {([
-                { mode: "markdown", Icon: TerminalIcon, label: "Markdown" },
-                { mode: "preview",  Icon: EyeIcon,      label: "Preview"  },
-              ] as { mode: ViewMode; Icon: React.FC<{className?: string}>; label: string }[]).map(({ mode, Icon, label }) => (
-                <button key={mode} onClick={() => setViewMode(mode)}
-                  className={`relative z-10 flex items-center gap-1.5 px-3 py-1.5 rounded-lg
-                    text-[11px] font-semibold transition-colors duration-150 ${
-                    viewMode === mode
-                      ? "text-[--text-primary]"
-                      : "text-[--text-muted] hover:text-[--text-secondary]"
-                  }`}>
-                  <Icon className="w-3 h-3 shrink-0" />
-                  {label}
-                </button>
-              ))}
-            </div>
+            {/* Sliding Markdown | Preview toggle — hidden for reference JSON */}
+            {!refData && (
+              <div className="relative flex p-1 rounded-xl border border-[--border]"
+                style={{ background: "var(--bg-elevated)" }}>
+                <div
+                  className="absolute top-1 bottom-1 rounded-lg transition-all duration-200 ease-in-out"
+                  style={{
+                    background: "var(--bg-sidebar)",
+                    boxShadow: "0 1px 6px rgba(0,0,0,0.12)",
+                    left:  viewMode === "markdown" ? "4px" : "calc(50% + 0px)",
+                    width: "calc(50% - 4px)",
+                  }}
+                />
+                {([
+                  { mode: "markdown", Icon: TerminalIcon, label: "Markdown" },
+                  { mode: "preview",  Icon: EyeIcon,      label: "Preview"  },
+                ] as { mode: ViewMode; Icon: React.FC<{className?: string}>; label: string }[]).map(({ mode, Icon, label }) => (
+                  <button key={mode} onClick={() => setViewMode(mode)}
+                    className={`relative z-10 flex items-center gap-1.5 px-3 py-1.5 rounded-lg
+                      text-[11px] font-semibold transition-colors duration-150 ${
+                      viewMode === mode
+                        ? "text-[--text-primary]"
+                        : "text-[--text-muted] hover:text-[--text-secondary]"
+                    }`}>
+                    <Icon className="w-3 h-3 shrink-0" />
+                    {label}
+                  </button>
+                ))}
+              </div>
+            )}
 
             {/* Copy button */}
             <button onClick={handleCopy}
@@ -338,12 +353,16 @@ export default function ItemViewer({ item, category, section }: ItemViewerProps)
 
       {/* ── Content area ────────────────────────── */}
       <div className="lg:flex-1 lg:min-h-0 lg:overflow-y-auto">
-        {viewMode === "markdown" ? (
+        {refData ? (
+          /* ── Reference JSON view ── */
+          <div key="reference" className="animate-fade-slide">
+            <ReferenceViewer data={refData} category={category} section={section} />
+          </div>
+        ) : viewMode === "markdown" ? (
           /* ── Markdown view ── */
           <div key="markdown" className="animate-fade-slide p-3 sm:p-6">
             <div className="rounded-xl border border-[--border] overflow-hidden"
               style={{ background: "var(--bg-elevated)" }}>
-              {/* Fake window chrome */}
               <div className="flex items-center gap-2 px-4 py-2.5 border-b border-[--border]"
                 style={{ background: "var(--bg-sidebar)" }}>
                 <div className="flex gap-1.5">
@@ -362,7 +381,7 @@ export default function ItemViewer({ item, category, section }: ItemViewerProps)
                   </span>
                 )}
               </div>
-              <div className="p-5 overflow-auto" style={{ fontFamily: "var(--font-geist-mono, monospace)" }}>
+              <div className="p-5 overflow-x-auto" style={{ fontFamily: "var(--font-geist-mono, monospace)" }}>
                 {forMarkdown.split("\n").map((line, i) => (
                   <div key={i} className="flex gap-4 leading-relaxed">
                     <span className="select-none text-right shrink-0 w-7"
@@ -380,7 +399,6 @@ export default function ItemViewer({ item, category, section }: ItemViewerProps)
           <div key="preview" className="animate-fade-slide p-3 sm:p-4 lg:p-6">
             <div className="max-w-5xl mx-auto rounded-2xl border border-[--border] overflow-hidden shadow-xl"
               style={{ background: "var(--bg-sidebar)", boxShadow: `0 20px 60px ${category.color}0c` }}>
-              {/* Document header band */}
               <div className="px-4 sm:px-8 pt-5 sm:pt-7 pb-4 sm:pb-5"
                 style={{ background: `linear-gradient(135deg, ${category.color}0a, ${section.color}06)`,
                   borderBottom: "1px solid var(--border)" }}>
@@ -393,16 +411,10 @@ export default function ItemViewer({ item, category, section }: ItemViewerProps)
                     style={{ background: `${category.color}18`, color: category.color }}>
                     {category.name}
                   </span>
-                  <span className="text-[10px] font-mono text-[--text-muted] ml-auto"
-                    style={{ fontFamily: "var(--font-geist-mono, monospace)" }}>
-                    {section.id}/{category.id}/{item.id}.md
-                  </span>
                 </div>
                 <h2 className="text-xl font-black text-[--text-primary]">{item.title}</h2>
                 <p className="text-sm text-[--text-secondary] mt-1 leading-relaxed">{item.description}</p>
               </div>
-
-              {/* Document body */}
               <div className="px-4 sm:px-8 py-5 sm:py-7">
                 <ReactMarkdown remarkPlugins={[remarkGfm]} components={mdComponents}>
                   {forPreview}

@@ -1,0 +1,43 @@
+{
+  "type": "reference",
+  "intro": "How to recover from stuck agents, wrong edits, and sessions that have gone off the rails.",
+  "sections": [
+    {
+      "variant": "code",
+      "title": "Most Important: Stop Immediately",
+      "description": "If Claude is doing something wrong, interrupt before it compounds. Then assess the damage.",
+      "language": "bash",
+      "code": "# Stop generation mid-stream\nCtrl+C\n\n# Check what actually changed before proceeding\ngit diff\ngit status"
+    },
+    {
+      "variant": "code",
+      "title": "Recovering from Wrong Edits",
+      "language": "bash",
+      "code": "# Discard all uncommitted changes\ngit checkout .\n\n# Remove untracked files (careful — confirm first)\ngit clean -fd\n\n# Undo last commit, keep changes staged\ngit reset HEAD~1\n\n# Undo last commit, discard changes\ngit reset --hard HEAD~1"
+    },
+    {
+      "variant": "tips",
+      "title": "Breaking a Loop",
+      "items": [
+        { "title": "Force a restart", "body": "Say: 'Stop. The approach from the last N messages was wrong because [reason]. Please start from scratch with this understanding: [restate the actual task].'", "type": "good" },
+        { "title": "Fresh eyes", "body": "'Pretend you're seeing this codebase for the first time. Read the error message again carefully and describe exactly what it says.'", "type": "good" },
+        { "title": "Run commands yourself", "body": "Use ! command to run failing commands yourself and paste the real output. Gives Claude ground truth instead of guesses.", "type": "info" }
+      ]
+    },
+    {
+      "variant": "code",
+      "title": "Diagnostic Commands",
+      "description": "Run these to give Claude accurate grounding.",
+      "language": "bash",
+      "code": "! git status             # what's actually changed?\n! git diff               # exact diff of all changes\n! npm test 2>&1 | tail   # what's actually failing?\n! node -e \"require('./src/lib/auth')\"  # does the module even load?"
+    },
+    {
+      "variant": "tips",
+      "title": "Prevention",
+      "items": [
+        { "title": "Verify after every batch of changes", "body": "Run git diff after each meaningful set of edits — don't let wrong changes accumulate.", "type": "good" },
+        { "title": "Plan before code", "body": "For complex tasks: 'Don't write any code yet — just tell me your plan.' Catch misunderstandings before they become wrong code.", "type": "good" }
+      ]
+    }
+  ]
+}

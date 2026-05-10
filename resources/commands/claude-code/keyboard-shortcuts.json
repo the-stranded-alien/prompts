@@ -1,0 +1,66 @@
+{
+  "type": "reference",
+  "intro": "Full keyboard shortcut reference for the Claude Code CLI and IDE extensions.",
+  "sections": [
+    {
+      "variant": "shortcuts",
+      "title": "CLI — Navigation & Control",
+      "items": [
+        { "keys": ["Ctrl", "C"],  "action": "Cancel current operation / stop generation mid-stream" },
+        { "keys": ["Ctrl", "D"],  "action": "Exit Claude Code" },
+        { "keys": ["Ctrl", "L"],  "action": "Clear the terminal screen" },
+        { "keys": ["↑"],          "action": "Recall previous message from input history" },
+        { "keys": ["↓"],          "action": "Navigate forward through input history" },
+        { "keys": ["Tab"],        "action": "Autocomplete file paths and slash commands" },
+        { "keys": ["Escape"],     "action": "Reject the current tool call (when prompted) or cancel multi-line input" }
+      ]
+    },
+    {
+      "variant": "shortcuts",
+      "title": "CLI — Input Editing",
+      "items": [
+        { "keys": ["Ctrl", "A"],  "action": "Move cursor to start of line" },
+        { "keys": ["Ctrl", "E"],  "action": "Move cursor to end of line" },
+        { "keys": ["Ctrl", "K"],  "action": "Delete from cursor to end of line" },
+        { "keys": ["Ctrl", "U"],  "action": "Delete the entire current line" },
+        { "keys": ["Ctrl", "W"],  "action": "Delete the previous word" },
+        { "keys": ["Opt", "←"],   "action": "Move cursor backward one word (macOS)" },
+        { "keys": ["Opt", "→"],   "action": "Move cursor forward one word (macOS)" }
+      ]
+    },
+    {
+      "variant": "shortcuts",
+      "title": "CLI — Multi-line & Submission",
+      "items": [
+        { "keys": ["Shift", "Enter"], "action": "Insert a new line without submitting" },
+        { "keys": ["Enter"],          "action": "Submit the message" }
+      ]
+    },
+    {
+      "variant": "shortcuts",
+      "title": "VS Code Extension",
+      "items": [
+        { "keys": ["⌘", "Shift", "C"], "action": "Open Claude Code panel", "note": "Ctrl+Shift+C on Windows/Linux" },
+        { "keys": ["⌘", "Shift", "."], "action": "Accept inline suggestion" },
+        { "keys": ["Tab"],             "action": "Cycle through inline suggestions" },
+        { "keys": ["Escape"],          "action": "Dismiss inline suggestion" }
+      ]
+    },
+    {
+      "variant": "shortcuts",
+      "title": "JetBrains Extension",
+      "items": [
+        { "keys": ["Ctrl", "Shift", "C"], "action": "Open Claude Code panel" },
+        { "keys": ["Alt", "Enter"],       "action": "Accept inline suggestion" },
+        { "keys": ["Escape"],             "action": "Dismiss inline suggestion" }
+      ]
+    },
+    {
+      "variant": "code",
+      "title": "Customising Shortcuts",
+      "description": "Edit ~/.claude/keybindings.json to rebind any key.",
+      "language": "json",
+      "code": "[\n  {\n    \"key\": \"ctrl+shift+enter\",\n    \"command\": \"submit\",\n    \"description\": \"Submit with Ctrl+Shift+Enter instead of Enter\"\n  },\n  {\n    \"key\": \"ctrl+r\",\n    \"command\": \"slash:review\",\n    \"description\": \"Quick access to /review\"\n  }\n]"
+    }
+  ]
+}

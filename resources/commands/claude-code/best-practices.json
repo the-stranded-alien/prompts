@@ -1,0 +1,33 @@
+{
+  "type": "reference",
+  "intro": "Power-user patterns that consistently produce better results from Claude Code.",
+  "sections": [
+    {
+      "variant": "tips",
+      "title": "Context & Input",
+      "items": [
+        { "title": "CLAUDE.md is your force multiplier", "body": "Run /init once, edit the output, and every future session starts expert-in-context. Include commands, conventions, architecture, and gotchas. Update it as the project evolves.", "type": "good" },
+        { "title": "Load context before asking", "body": "Type #src/lib/auth.ts before complex requests. Claude reads it immediately rather than spending a turn discovering it.", "type": "good" },
+        { "title": "Be specific about scope", "body": "Vague: 'fix the bug'. Specific: 'fix the null pointer in src/api/auth.ts:47 when req.user is undefined'. Specific requests produce surgical edits.", "type": "good" }
+      ]
+    },
+    {
+      "variant": "tips",
+      "title": "Workflow",
+      "items": [
+        { "title": "One task at a time", "body": "Chain tasks explicitly with 'verify, then continue' rather than 'do steps 1–5 all at once'. You catch problems earlier and get better results at each step.", "type": "info" },
+        { "title": "Verify before accepting", "body": "Always run: git diff (what changed?), npm test (still passing?), npm run lint (any regressions?). Don't trust the summary — read the diff.", "type": "warning" },
+        { "title": "Plan before implementing", "body": "For complex tasks: 'Don't write code yet — tell me your plan first.' This surfaces misunderstandings before they become wrong code.", "type": "good" }
+      ]
+    },
+    {
+      "variant": "tips",
+      "title": "Advanced",
+      "items": [
+        { "title": "Parallel agents with worktrees", "body": "Create git worktrees for independent features and run a Claude Code session in each. No file conflicts, full parallelism.", "type": "info" },
+        { "title": "Hooks for automatic guardrails", "body": "Set up PostToolUse hooks to auto-run lint and type-check after every edit. Continuous feedback without asking for it.", "type": "info" },
+        { "title": "The ! shortcut", "body": "Type ! command to run a shell command and pipe the output into the conversation. Great for feeding Claude real error messages or git log output.", "type": "good" }
+      ]
+    }
+  ]
+}

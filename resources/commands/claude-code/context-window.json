@@ -1,0 +1,33 @@
+{
+  "type": "reference",
+  "intro": "Everything in the conversation (messages, tool results, file contents) counts toward the context limit. Managing it well keeps responses sharp in long sessions.",
+  "sections": [
+    {
+      "variant": "tips",
+      "title": "Signs of a Full Context Window",
+      "items": [
+        { "title": "Shorter, less precise responses", "body": "If Claude's answers start getting vague or generic, context is probably near the limit. Run /compact.", "type": "warning" },
+        { "title": "Forgetting earlier decisions", "body": "If Claude contradicts something decided earlier in the session, the context has been truncated.", "type": "warning" },
+        { "title": "Truncated tool results", "body": "Long file reads or command outputs may be cut off silently as the window fills.", "type": "warning" }
+      ]
+    },
+    {
+      "variant": "commands",
+      "title": "/compact",
+      "items": [
+        { "cmd": "/compact", "desc": "Compress conversation history into a dense summary, freeing space for more work" },
+        { "cmd": "/compact", "desc": "Keep specific context: append what to preserve after the command", "example": "/compact — keep the auth architecture decisions and reviewed file list" }
+      ]
+    },
+    {
+      "variant": "tips",
+      "title": "Token-Efficient Patterns",
+      "items": [
+        { "title": "Reference, don't paste", "body": "Say 'see src/api/users.ts:42-78' rather than pasting the code. It costs tokens for both input and output.", "type": "good" },
+        { "title": "Ask for concise outputs", "body": "Say 'give me just the list, no explanation needed' when you only need the fact, not the reasoning.", "type": "good" },
+        { "title": "Summarise before continuing", "body": "After a long exploration: 'Summarise the key findings in 5 bullet points. We'll use that as our working context going forward.'", "type": "good" },
+        { "title": "Start fresh for new tasks", "body": "When you've finished one task and starting something unrelated, start a new session. Carrying irrelevant history just wastes context.", "type": "info" }
+      ]
+    }
+  ]
+}

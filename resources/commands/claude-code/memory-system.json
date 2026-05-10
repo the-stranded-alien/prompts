@@ -1,0 +1,33 @@
+{
+  "type": "reference",
+  "intro": "Claude Code has a file-based memory system. Memories persist across sessions — loaded automatically every time you start a session in a project.",
+  "sections": [
+    {
+      "variant": "table",
+      "title": "Memory Types",
+      "columns": ["Type", "What to Store", "Example"],
+      "rows": [
+        ["user",      "Your role, expertise, working preferences",            "Senior backend engineer, new to React frontend"],
+        ["feedback",  "How Claude should behave — corrections and confirmations", "No trailing summaries. Terse responses. Keep diffs minimal."],
+        ["project",   "Ongoing work, key decisions, current state",           "Auth rewrite is compliance-driven, not tech debt"],
+        ["reference", "Where to find things in external systems",             "Bug tracker: Linear project INFRA"]
+      ]
+    },
+    {
+      "variant": "code",
+      "title": "Memory File Format",
+      "language": "markdown",
+      "code": "---\nname: Feedback: terse responses\ndescription: User wants short, direct responses with no padding\ntype: feedback\n---\n\nNo trailing summaries after tool use. No 'I've completed...' closings.\nOne sentence updates during work.\n\n**Why:** User finds verbose responses slow and distracting.\n**How to apply:** Every response — check length before sending."
+    },
+    {
+      "variant": "tips",
+      "title": "Saving & Recalling",
+      "items": [
+        { "title": "Ask Claude to remember", "body": "Say 'Remember that we use cursor-based pagination everywhere — add this to memory.' Claude writes the file and updates the index automatically.", "type": "good" },
+        { "title": "Ask Claude to recall", "body": "Say 'Check your memory for context about this project before we start.' Claude reads the index and surfaces relevant memories.", "type": "good" },
+        { "title": "Memory goes stale", "body": "Memories can be wrong after refactors. Before acting on recalled memory, Claude should verify against the current code. Trust what you see — not what was remembered.", "type": "warning" },
+        { "title": "What NOT to store", "body": "Don't store code patterns (read the code), git history (use git log), in-progress task details (use task list), or things already in CLAUDE.md.", "type": "bad" }
+      ]
+    }
+  ]
+}

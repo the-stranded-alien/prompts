@@ -1,0 +1,33 @@
+{
+  "type": "reference",
+  "intro": "Patterns that consistently get better results from Codex — structured tasks, good context, and safe workflows.",
+  "sections": [
+    {
+      "variant": "tips",
+      "title": "Task Prompting",
+      "items": [
+        { "title": "Imperative, bounded tasks", "body": "Good: 'Fix the null pointer in createUser when email is undefined'. Bad: 'The createUser function has issues'. Specific tasks produce surgical edits.", "type": "good" },
+        { "title": "Reference exact locations", "body": "Include file paths and function names. 'In src/api/users.ts, in the updateUser function, add a check that...' beats 'fix the update function'.", "type": "good" },
+        { "title": "State what not to touch", "body": "Add 'Do not modify other files' or 'Only change src/api/posts.ts' to keep diffs minimal.", "type": "info" }
+      ]
+    },
+    {
+      "variant": "tips",
+      "title": "Context & Safety",
+      "items": [
+        { "title": "Write an AGENTS.md", "body": "Like CLAUDE.md for Claude Code, AGENTS.md gives Codex persistent project context — stack, commands, conventions, and what NOT to do.", "type": "good" },
+        { "title": "Always work in a branch", "body": "git checkout -b codex/feature-name before any Codex task. If something goes wrong: git checkout . to reset.", "type": "warning" },
+        { "title": "Verify with git diff", "body": "After every Codex session: git diff to review what changed. Run npm test. Stage changes with git add -p to pick only the good parts.", "type": "good" }
+      ]
+    },
+    {
+      "variant": "tips",
+      "title": "Multi-Step Workflows",
+      "items": [
+        { "title": "Explore before implementing", "body": "Start with: 'What files handle authentication in this project?' Review Codex's understanding before asking it to change anything.", "type": "good" },
+        { "title": "Order multi-file changes", "body": "For changes that span files, list them in dependency order: 'Make these changes in order: 1. Add type to types.ts 2. Update model 3. Update API route'", "type": "info" },
+        { "title": "Use before/after examples", "body": "For style-sensitive tasks (like callback→async/await conversions), show one 'before' and one 'after' example before asking Codex to apply the pattern across files.", "type": "good" }
+      ]
+    }
+  ]
+}

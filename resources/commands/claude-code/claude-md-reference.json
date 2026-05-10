@@ -1,0 +1,33 @@
+{
+  "type": "reference",
+  "intro": "CLAUDE.md is the single most impactful thing you can do to improve Claude Code's output quality. It's read automatically at the start of every session.",
+  "sections": [
+    {
+      "variant": "table",
+      "title": "Load Order",
+      "columns": ["Location", "Scope", "Notes"],
+      "rows": [
+        ["~/.claude/CLAUDE.md",         "Global",          "Your personal defaults across all projects"],
+        ["~/projects/CLAUDE.md",        "Parent directory", "Monorepo root conventions"],
+        ["~/projects/my-app/CLAUDE.md", "Project root",    "Most commonly used — project-specific"],
+        ["~/projects/my-app/src/CLAUDE.md", "Subdirectory", "Scope instructions to a specific module"]
+      ]
+    },
+    {
+      "variant": "code",
+      "title": "Full Template",
+      "language": "markdown",
+      "code": "# Project: [Name]\n\n## Overview\n[1–2 sentences: what this is and what it does]\nStack: Next.js 14, TypeScript, Prisma, PostgreSQL\n\n## Commands\n```bash\nnpm run dev          # start dev server (port 3000)\nnpm test             # jest — run all tests\nnpm run lint         # eslint + prettier check\nnpm run typecheck    # tsc --noEmit\nnpm run build        # production build\nnpm run db:migrate   # run pending Prisma migrations\n```\n\n## Architecture\n```\nsrc/\n  app/          Next.js app router pages\n  components/   React components (named exports only)\n  lib/          Shared utilities and helpers\n  api/          API route handlers\nprisma/\n  schema.prisma DB schema\n```\n\n## Conventions\n- TypeScript strict mode — no `any`\n- Named exports everywhere, no default exports\n- All DB queries via `lib/db.ts` — never import Prisma directly\n- API routes return `{ data }` on success, `{ error: string }` on failure\n- Zod for all API input validation\n\n## What NOT to Do\n- Never use `any` — use `unknown` and narrow\n- Never commit `.env` or `.env.local`\n- Never write `console.log` in production code"
+    },
+    {
+      "variant": "tips",
+      "title": "Writing Good CLAUDE.md Files",
+      "items": [
+        { "title": "Update it with decisions", "body": "When you make an architectural decision, add it. CLAUDE.md should reflect how the codebase is actually built, not how you planned it.", "type": "good" },
+        { "title": "Keep it honest", "body": "Wrong conventions are worse than no conventions. Claude will follow what's written — if it's outdated, you'll get outdated code.", "type": "warning" },
+        { "title": "One line per rule", "body": "Dense lists are read; paragraphs are skimmed. Be terse. 'Use dayjs not date-fns' beats a paragraph about date handling.", "type": "good" },
+        { "title": "Add gotchas", "body": "Non-obvious constraints ('we use dayjs not date-fns', 'never import Prisma directly') are the most valuable content. Obvious things don't need to be said.", "type": "info" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "type": "reference",
+  "intro": "Codex runs in a sandboxed environment with controlled access to your filesystem and network — real work, safely bounded.",
+  "sections": [
+    {
+      "variant": "table",
+      "title": "What Codex Can Access",
+      "columns": ["Resource", "Access"],
+      "rows": [
+        ["Files in working directory",  "Read + Write (with approval)"],
+        ["Files outside working dir",   "No access by default"],
+        ["Shell commands",              "Yes — tests, linters, builds, git"],
+        ["Network (outbound)",          "No by default — requires --allow-network"],
+        ["System files",                "No access"]
+      ]
+    },
+    {
+      "variant": "table",
+      "title": "Approval Mode × Sandbox",
+      "columns": ["Mode", "File Edits", "Shell Commands", "Network"],
+      "rows": [
+        ["suggest",   "You apply manually",  "You approve each",    "No"],
+        ["auto-edit", "Auto-applied",        "You approve each",    "No"],
+        ["full-auto", "Auto-applied",        "Auto-executed",       "No (unless --allow-network)"]
+      ]
+    },
+    {
+      "variant": "tips",
+      "title": "Working Directory Scoping",
+      "items": [
+        { "title": "Launch from the right directory", "body": "Codex sees everything in the directory where you launched it and below. For monorepos, cd to the specific package before running Codex to scope it correctly.", "type": "info" },
+        { "title": "Sensitive files", "body": "Codex will read .env and .env.local if they exist in the working directory. Keep real secrets in .env.local (gitignored). Use .env.example with dummy values for reference.", "type": "warning" },
+        { "title": "Resource limits", "body": "Commands timeout after ~30 seconds. Long test suites may need to be broken into parts. Output is truncated after ~10,000 chars per command.", "type": "info" }
+      ]
+    }
+  ]
+}

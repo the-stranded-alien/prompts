@@ -1,0 +1,27 @@
+{
+  "type": "reference",
+  "intro": "Run Codex headlessly in GitHub Actions, GitLab CI, and automation scripts. Always: branch → task → test → PR.",
+  "sections": [
+    {
+      "variant": "code",
+      "title": "GitHub Actions — Auto-Fix Lint Errors",
+      "language": "yaml",
+      "code": "name: Auto-fix lint\non:\n  pull_request:\n    types: [labeled]\n\njobs:\n  autofix:\n    runs-on: ubuntu-latest\n    if: contains(github.event.label.name, 'autofix')\n    steps:\n      - uses: actions/checkout@v4\n        with: { ref: \"${{ github.head_ref }}\" }\n\n      - uses: actions/setup-node@v4\n        with: { node-version: '20', cache: 'npm' }\n\n      - run: npm ci\n\n      - name: Run Codex\n        env:\n          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}\n        run: |\n          npx @openai/codex --approval-mode full-auto --quiet \\\n            \"Fix all ESLint errors. Only fix what lint reports.\"\n\n      - run: npm test\n\n      - run: |\n          git config user.name \"Codex Bot\"\n          git config user.email \"codex@ci\"\n          git diff --quiet || git commit -am \"fix: auto-fix lint via Codex\" && git push"
+    },
+    {
+      "variant": "code",
+      "title": "Safe CI Pattern — Always Gate with Tests",
+      "language": "bash",
+      "code": "# Always: run on a branch, gate with tests\ngit checkout -b codex/autofix-$(date +%Y%m%d)\n\nnpx @openai/codex --approval-mode full-auto --quiet \"$TASK\" \\\n  && npm test \\\n  || (echo \"Codex changes broke tests\" && git checkout . && exit 1)\n\ngit push -u origin HEAD\ngh pr create --title \"Codex: $TASK\""
+    },
+    {
+      "variant": "tips",
+      "title": "Security Rules for CI",
+      "items": [
+        { "title": "Never use user-supplied input as the task", "body": "If the Codex task comes from an external source (GitHub comment, webhook), sanitise it first. Injected tasks can cause Codex to execute arbitrary code.", "type": "bad" },
+        { "title": "Always run on a branch, never main", "body": "full-auto on main is irreversible. Always checkout -b before running Codex in automated contexts.", "type": "warning" },
+        { "title": "Review Codex PRs before merging", "body": "For production codebases, the CI creates a PR and a human reviews before merge. full-auto + review is the safest CI pattern.", "type": "good" }
+      ]
+    }
+  ]
+}
