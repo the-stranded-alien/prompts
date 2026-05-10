@@ -129,32 +129,22 @@ export default function MainClient({ sections }: MainClientProps) {
             {primarySections.map((s) => {
               const Icon = getIconByName(s.icon);
               const isActive = s.id === activeSectionId;
-              const sectionCount = s.categories.reduce((sum, c) => sum + c.items.length, 0);
               return (
                 <button
                   key={s.id}
                   onClick={() => handleSelectSection(s.id)}
-                  className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 px-2 rounded-lg
-                    text-[11px] font-bold transition-all duration-200 ${
+                  className={`flex-1 min-w-0 overflow-hidden flex items-center justify-center gap-1.5
+                    py-1.5 px-2 rounded-lg text-[11px] font-bold transition-all duration-200 ${
                     isActive
                       ? "text-[--text-primary] shadow-sm"
                       : "text-[--text-muted] hover:text-[--text-secondary]"
                   }`}
                   style={isActive ? { background: "var(--bg-sidebar)" } : {}}
                 >
-                  <span style={isActive ? { color: s.color } : {}}>
-                    <Icon className="w-3.5 h-3.5 shrink-0" />
+                  <span style={isActive ? { color: s.color } : {}} className="shrink-0">
+                    <Icon className="w-3.5 h-3.5" />
                   </span>
-                  <span>{s.name}</span>
-                  <span
-                    className="text-[9px] font-mono tabular-nums px-1 py-px rounded"
-                    style={isActive
-                      ? { background: `${s.color}18`, color: s.color }
-                      : { background: "var(--bg)", color: "var(--text-muted)" }
-                    }
-                  >
-                    {sectionCount}
-                  </span>
+                  <span className="truncate">{s.name}</span>
                 </button>
               );
             })}
@@ -305,21 +295,15 @@ export default function MainClient({ sections }: MainClientProps) {
                 const count = s.categories.reduce((sum, c) => sum + c.items.length, 0);
                 return (
                   <button key={s.id} onClick={() => handleSelectSection(s.id)}
-                    className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 px-2 rounded-lg
-                      text-[11px] font-bold transition-all duration-200 ${
+                    className={`flex-1 min-w-0 overflow-hidden flex items-center justify-center gap-1.5
+                      py-1.5 px-2 rounded-lg text-[11px] font-bold transition-all duration-200 ${
                       isActive ? "text-[--text-primary] shadow-sm" : "text-[--text-muted]"
                     }`}
                     style={isActive ? { background: "var(--bg-sidebar)" } : {}}>
-                    <span style={isActive ? { color: s.color } : {}}>
-                      <Icon className="w-3.5 h-3.5 shrink-0" />
+                    <span style={isActive ? { color: s.color } : {}} className="shrink-0">
+                      <Icon className="w-3.5 h-3.5" />
                     </span>
-                    <span>{s.name}</span>
-                    <span className="text-[9px] font-mono tabular-nums px-1 py-px rounded"
-                      style={isActive
-                        ? { background: `${s.color}18`, color: s.color }
-                        : { background: "var(--bg)", color: "var(--text-muted)" }}>
-                      {count}
-                    </span>
+                    <span className="truncate">{s.name}</span>
                   </button>
                 );
               })}
@@ -327,7 +311,7 @@ export default function MainClient({ sections }: MainClientProps) {
           </div>
         </div>
 
-        <div className="flex-1 min-h-0 overflow-y-auto lg:overflow-hidden">
+        <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden lg:overflow-hidden">
           {selection && selectedCategory && activeSection ? (
             <ItemViewer
               key={`${selection.sectionId}-${selection.categoryId}-${selection.item.id}`}

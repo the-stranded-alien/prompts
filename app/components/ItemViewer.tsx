@@ -352,7 +352,7 @@ export default function ItemViewer({ item, category, section }: ItemViewerProps)
       )}
 
       {/* ── Content area ────────────────────────── */}
-      <div className="lg:flex-1 lg:min-h-0 lg:overflow-y-auto">
+      <div className="lg:flex-1 lg:min-h-0 lg:overflow-y-auto overflow-x-hidden min-w-0">
         {refData ? (
           /* ── Reference JSON view ── */
           <div key="reference" className="animate-fade-slide">

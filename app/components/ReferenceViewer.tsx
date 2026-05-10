@@ -92,34 +92,37 @@ function CommandsSection({ sec, color }: { sec: Extract<RefSection, { variant: "
   return (
     <div>
       <SectionHeader title={sec.title} description={sec.description} color={color} />
-      <div className="rounded-xl border border-[--border] overflow-hidden">
+      <div className="rounded-xl border border-[--border]">
         {sec.items.map((item, i) => (
           <div key={i}
-            className="group flex items-start gap-3 px-4 py-3 border-b border-[--border] last:border-0
-              hover:bg-[--bg-elevated] transition-colors"
+            className="group flex flex-col sm:flex-row sm:items-start gap-1.5 sm:gap-3
+              px-4 py-3 border-b border-[--border] last:border-0 hover:bg-[--bg-elevated] transition-colors"
           >
-            <code
-              className="shrink-0 text-[12px] font-mono font-semibold px-2 py-0.5 rounded-lg whitespace-nowrap"
-              style={{ background: `${color}14`, border: `1px solid ${color}30`, color }}
-            >
-              {item.cmd}
-            </code>
+            <div className="flex items-center gap-2 sm:shrink-0">
+              <code
+                className="text-[12px] font-mono font-semibold px-2 py-0.5 rounded-lg break-all"
+                style={{ background: `${color}14`, border: `1px solid ${color}30`, color }}
+              >
+                {item.cmd}
+              </code>
+              {item.badge && (
+                <span className="shrink-0 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide"
+                  style={{ background: `${color}18`, color }}>
+                  {item.badge}
+                </span>
+              )}
+              <span className="sm:hidden ml-auto"><CopyBtn text={item.cmd} small /></span>
+            </div>
             <div className="flex-1 min-w-0">
               <span className="text-[13px] text-[--text-secondary] leading-relaxed">{item.desc}</span>
               {item.example && (
-                <div className="mt-1 flex items-center gap-1.5">
-                  <span className="text-[11px] text-[--text-muted] shrink-0">›</span>
-                  <code className="text-[11px] font-mono text-[--text-muted]">{item.example}</code>
+                <div className="mt-1 flex items-start gap-1.5 min-w-0">
+                  <span className="text-[11px] text-[--text-muted] shrink-0 mt-px">›</span>
+                  <code className="text-[11px] font-mono text-[--text-muted] break-all">{item.example}</code>
                 </div>
               )}
             </div>
-            {item.badge && (
-              <span className="shrink-0 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide"
-                style={{ background: `${color}18`, color }}>
-                {item.badge}
-              </span>
-            )}
-            <CopyBtn text={item.cmd} small />
+            <span className="hidden sm:inline"><CopyBtn text={item.cmd} small /></span>
           </div>
         ))}
       </div>
@@ -131,21 +134,21 @@ function ShortcutsSection({ sec, color }: { sec: Extract<RefSection, { variant: 
   return (
     <div>
       <SectionHeader title={sec.title} description={sec.description} color={color} />
-      <div className="rounded-xl border border-[--border] overflow-hidden">
+      <div className="rounded-xl border border-[--border]">
         {sec.items.map((item, i) => (
           <div key={i}
-            className="flex items-center gap-3 px-4 py-2.5 border-b border-[--border] last:border-0
-              hover:bg-[--bg-elevated] transition-colors"
+            className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3 px-4 py-3
+              border-b border-[--border] last:border-0 hover:bg-[--bg-elevated] transition-colors"
           >
-            <div className="flex items-center gap-1 shrink-0 min-w-[140px]">
+            <div className="flex items-center gap-1 sm:shrink-0 sm:w-36 flex-wrap">
               {item.keys.map((k, ki) => (
                 <span key={ki} className="flex items-center gap-1">
-                  {ki > 0 && <span className="text-[11px] text-[--text-muted]">+</span>}
+                  {ki > 0 && <span className="text-[10px] text-[--text-muted]">+</span>}
                   <KeyBadge k={k} />
                 </span>
               ))}
             </div>
-            <span className="text-[--text-muted] text-xs shrink-0">→</span>
+            <span className="hidden sm:inline text-[--text-muted] text-xs shrink-0">→</span>
             <div className="flex-1 min-w-0">
               <span className="text-[13px] text-[--text-secondary]">{item.action}</span>
               {item.note && <span className="ml-2 text-[11px] text-[--text-muted]">({item.note})</span>}
@@ -162,7 +165,7 @@ function CodeSection({ sec, color }: { sec: Extract<RefSection, { variant: "code
   return (
     <div>
       <SectionHeader title={sec.title} description={sec.description} color={color} />
-      <div className="rounded-xl border border-[--border] overflow-hidden">
+      <div className="rounded-xl border border-[--border]">
         <div className="flex items-center justify-between px-4 py-2 border-b border-[--border]"
           style={{ background: "var(--bg-sidebar)" }}>
           <div className="flex items-center gap-2">
@@ -185,9 +188,9 @@ function CodeSection({ sec, color }: { sec: Extract<RefSection, { variant: "code
             }
           </button>
         </div>
-        <div className="overflow-x-auto" style={{ background: "var(--bg-elevated)" }}>
-          <pre className="p-4 text-[13px] leading-relaxed font-mono"
-            style={{ color: "var(--syn-code)", minWidth: 0 }}>
+        <div className="overflow-x-auto rounded-b-xl" style={{ background: "var(--bg-elevated)" }}>
+          <pre className="p-4 text-[13px] leading-relaxed"
+            style={{ color: "var(--syn-code)", fontFamily: "var(--font-geist-mono, monospace)" }}>
             <code>{sec.code}</code>
           </pre>
         </div>
@@ -203,8 +206,8 @@ function TableSection({ sec, color }: { sec: Extract<RefSection, { variant: "tab
   return (
     <div>
       <SectionHeader title={sec.title} description={sec.description} color={color} />
-      <div className="rounded-xl border border-[--border] overflow-hidden">
-        <div className="overflow-x-auto">
+      <div className="rounded-xl border border-[--border]">
+        <div className="overflow-x-auto rounded-xl">
           <table className="w-full text-sm">
             <thead>
               <tr>
@@ -327,7 +330,7 @@ export default function ReferenceViewer({ data, category, section }: ReferenceVi
   const color = category.color;
 
   return (
-    <div className="flex flex-col gap-6 p-4 sm:p-6">
+    <div className="flex flex-col gap-6 p-4 sm:p-6 overflow-x-hidden min-w-0">
       {data.intro && (
         <div className="rounded-xl border border-[--border] px-5 py-4"
           style={{ background: `${color}06`, borderColor: `${color}25` }}>
