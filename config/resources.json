@@ -6,7 +6,7 @@
       "icon": "file-text",
       "color": "#818cf8",
       "primary": true,
-      "description": "LLM prompts for coding, writing, data, and AI systems",
+      "description": "LLM prompts for coding, system design, agentic AI, planning, and more",
       "categories": [
         {
           "id": "coding",
@@ -41,6 +41,191 @@
               "description": "Review system design for scalability, reliability, and security",
               "file": "coding/architecture-review.md",
               "tags": ["architecture", "design", "scalability"]
+            },
+            {
+              "id": "test-generator",
+              "title": "Test Generator",
+              "description": "Generate comprehensive unit, integration, and edge-case tests",
+              "file": "coding/test-generator.md",
+              "tags": ["tests", "coverage", "tdd"]
+            },
+            {
+              "id": "security-audit",
+              "title": "Security Audit",
+              "description": "Deep security audit covering OWASP top 10 and threat modelling",
+              "file": "coding/security-audit.md",
+              "tags": ["security", "owasp", "vulnerabilities"]
+            },
+            {
+              "id": "performance-optimizer",
+              "title": "Performance Optimizer",
+              "description": "Profile, identify bottlenecks, and optimize code performance",
+              "file": "coding/performance-optimizer.md",
+              "tags": ["performance", "optimization", "profiling"]
+            },
+            {
+              "id": "code-explainer",
+              "title": "Code Explainer",
+              "description": "Explain complex code with mental models and annotated walkthroughs",
+              "file": "coding/code-explainer.md",
+              "tags": ["explain", "documentation", "learning"]
+            },
+            {
+              "id": "api-design",
+              "title": "API Design",
+              "description": "Design RESTful or GraphQL APIs with best practices and spec output",
+              "file": "coding/api-design.md",
+              "tags": ["api", "rest", "graphql", "design"]
+            },
+            {
+              "id": "migration-planner",
+              "title": "Migration Planner",
+              "description": "Plan database, framework, or language migrations with rollback strategy",
+              "file": "coding/migration-planner.md",
+              "tags": ["migration", "database", "upgrade"]
+            }
+          ]
+        },
+        {
+          "id": "system-design",
+          "name": "System Design",
+          "icon": "cpu",
+          "color": "#38bdf8",
+          "items": [
+            {
+              "id": "system-design-interview",
+              "title": "System Design Framework",
+              "description": "Structure any system design problem end-to-end with requirements, estimation, and tradeoffs",
+              "file": "system-design/system-design-interview.md",
+              "tags": ["system design", "scalability", "architecture"]
+            },
+            {
+              "id": "distributed-systems",
+              "title": "Distributed Systems Design",
+              "description": "Design fault-tolerant distributed systems with CAP tradeoffs",
+              "file": "system-design/distributed-systems.md",
+              "tags": ["distributed", "fault tolerance", "cap theorem"]
+            },
+            {
+              "id": "microservices",
+              "title": "Microservices Architecture",
+              "description": "Decompose a monolith or design microservices with service boundaries",
+              "file": "system-design/microservices.md",
+              "tags": ["microservices", "decomposition", "bounded context"]
+            },
+            {
+              "id": "database-schema",
+              "title": "Database Schema Designer",
+              "description": "Design normalized schemas with indexing strategy and query patterns",
+              "file": "system-design/database-schema.md",
+              "tags": ["database", "schema", "sql", "nosql"]
+            },
+            {
+              "id": "event-driven",
+              "title": "Event-Driven Architecture",
+              "description": "Design event-driven systems with queues, streams, and sagas",
+              "file": "system-design/event-driven.md",
+              "tags": ["events", "kafka", "queues", "async"]
+            },
+            {
+              "id": "caching-strategy",
+              "title": "Caching Strategy",
+              "description": "Design multi-layer caching with invalidation and consistency rules",
+              "file": "system-design/caching-strategy.md",
+              "tags": ["caching", "redis", "cdn", "invalidation"]
+            }
+          ]
+        },
+        {
+          "id": "agentic-ai",
+          "name": "Agentic AI",
+          "icon": "zap",
+          "color": "#a78bfa",
+          "items": [
+            {
+              "id": "agent-system-prompt",
+              "title": "Agent System Prompt",
+              "description": "Battle-tested system prompt for a capable, safe autonomous agent",
+              "file": "agentic-ai/agent-system-prompt.md",
+              "tags": ["agent", "system prompt", "autonomous"]
+            },
+            {
+              "id": "multi-agent-orchestrator",
+              "title": "Multi-Agent Orchestrator",
+              "description": "Orchestrate multiple specialised agents with routing and state",
+              "file": "agentic-ai/multi-agent-orchestrator.md",
+              "tags": ["multi-agent", "orchestration", "routing"]
+            },
+            {
+              "id": "react-agent",
+              "title": "ReAct Agent Pattern",
+              "description": "Reason-then-Act pattern for grounded, step-by-step tool use",
+              "file": "agentic-ai/react-agent.md",
+              "tags": ["react", "tool use", "reasoning"]
+            },
+            {
+              "id": "memory-management",
+              "title": "Memory & Context Management",
+              "description": "Design long-term memory, context windows, and retrieval for agents",
+              "file": "agentic-ai/memory-management.md",
+              "tags": ["memory", "rag", "context", "retrieval"]
+            },
+            {
+              "id": "tool-use-agent",
+              "title": "Tool-Use Agent",
+              "description": "Agent prompt optimised for function calling with error recovery",
+              "file": "agentic-ai/tool-use-agent.md",
+              "tags": ["tools", "function calling", "agent"]
+            },
+            {
+              "id": "agent-safety",
+              "title": "Agent Safety & Guardrails",
+              "description": "Constraints, fallbacks, and human-in-the-loop gates for safe agents",
+              "file": "agentic-ai/agent-safety.md",
+              "tags": ["safety", "guardrails", "hitl", "alignment"]
+            }
+          ]
+        },
+        {
+          "id": "planning",
+          "name": "Planning",
+          "icon": "file-text",
+          "color": "#fb923c",
+          "items": [
+            {
+              "id": "feature-planning",
+              "title": "Feature Planning",
+              "description": "Decompose a feature request into spec, tasks, and acceptance criteria",
+              "file": "planning/feature-planning.md",
+              "tags": ["planning", "spec", "product"]
+            },
+            {
+              "id": "rfc-template",
+              "title": "RFC / Design Doc",
+              "description": "Write a structured RFC or design doc with tradeoffs and alternatives",
+              "file": "planning/rfc-template.md",
+              "tags": ["rfc", "design doc", "architecture"]
+            },
+            {
+              "id": "technical-roadmap",
+              "title": "Technical Roadmap",
+              "description": "Build a phased technical roadmap with milestones and dependencies",
+              "file": "planning/technical-roadmap.md",
+              "tags": ["roadmap", "milestones", "planning"]
+            },
+            {
+              "id": "postmortem",
+              "title": "Incident Postmortem",
+              "description": "Write a blameless postmortem with timeline, root cause, and action items",
+              "file": "planning/postmortem.md",
+              "tags": ["postmortem", "incident", "sre"]
+            },
+            {
+              "id": "sprint-planning",
+              "title": "Sprint Planning",
+              "description": "Break down a sprint backlog into estimated, dependency-ordered tasks",
+              "file": "planning/sprint-planning.md",
+              "tags": ["sprint", "agile", "estimation"]
             }
           ]
         },
@@ -52,10 +237,10 @@
           "items": [
             {
               "id": "blog-post",
-              "title": "Blog Post Writer",
-              "description": "Write engaging, SEO-optimised blog posts",
+              "title": "Technical Blog Post",
+              "description": "Write a compelling technical blog post or engineering article",
               "file": "writing/blog-post.md",
-              "tags": ["blog", "seo", "content"]
+              "tags": ["blog", "technical writing", "content"]
             },
             {
               "id": "technical-doc",
@@ -63,13 +248,6 @@
               "description": "Clear and structured technical documentation",
               "file": "writing/technical-doc.md",
               "tags": ["docs", "technical"]
-            },
-            {
-              "id": "email-drafter",
-              "title": "Email Drafter",
-              "description": "Draft professional emails for any context and tone",
-              "file": "writing/email-drafter.md",
-              "tags": ["email", "communication", "professional"]
             }
           ]
         },
@@ -114,56 +292,20 @@
               "description": "System prompt for an autonomous coding agent",
               "file": "system/code-agent.md",
               "tags": ["system", "agent", "coding"]
-            }
-          ]
-        },
-        {
-          "id": "career",
-          "name": "Career",
-          "icon": "pen",
-          "color": "#f59e0b",
-          "items": [
-            {
-              "id": "resume-review",
-              "title": "Resume Review",
-              "description": "Review and improve a resume for a specific role and company",
-              "file": "career/resume-review.md",
-              "tags": ["resume", "career", "job search"]
             },
             {
-              "id": "cover-letter",
-              "title": "Cover Letter Writer",
-              "description": "Write a personalised, non-generic cover letter that stands out",
-              "file": "career/cover-letter.md",
-              "tags": ["cover letter", "job application", "writing"]
+              "id": "claude-code-agent",
+              "title": "Claude Code Agent",
+              "description": "Production-grade system prompt tuned for Claude Code (CLI)",
+              "file": "system/claude-code-agent.md",
+              "tags": ["claude", "claude code", "cli", "agent"]
             },
             {
-              "id": "job-description-analyser",
-              "title": "Job Description Analyser",
-              "description": "Decode a JD to find real requirements, fit gaps, and ATS keywords",
-              "file": "career/job-description-analyser.md",
-              "tags": ["job search", "jd", "ats", "keywords"]
-            },
-            {
-              "id": "interview-prep",
-              "title": "Interview Prep Coach",
-              "description": "Tailored questions, STAR answers, and strategy for any interview",
-              "file": "career/interview-prep.md",
-              "tags": ["interview", "preparation", "star", "behavioural"]
-            },
-            {
-              "id": "linkedin-optimise",
-              "title": "LinkedIn Optimiser",
-              "description": "Rewrite headline, about, and bullets to attract recruiter attention",
-              "file": "career/linkedin-optimise.md",
-              "tags": ["linkedin", "profile", "personal brand"]
-            },
-            {
-              "id": "cold-outreach",
-              "title": "Cold Outreach Writer",
-              "description": "Write genuine cold messages to recruiters and hiring managers",
-              "file": "career/cold-outreach.md",
-              "tags": ["networking", "cold email", "outreach", "linkedin"]
+              "id": "codex-agent",
+              "title": "Codex Agent",
+              "description": "System prompt optimised for OpenAI Codex / GPT code tasks",
+              "file": "system/codex-agent.md",
+              "tags": ["codex", "openai", "agent"]
             }
           ]
         },
@@ -186,6 +328,20 @@
               "description": "Generate high-quality JSONL training examples for fine-tuning",
               "file": "ai-ops/fine-tune-data.md",
               "tags": ["fine-tuning", "training data", "llm"]
+            },
+            {
+              "id": "prompt-optimizer",
+              "title": "Prompt Optimizer",
+              "description": "Rewrite and test prompts for clarity, specificity, and output quality",
+              "file": "ai-ops/prompt-optimizer.md",
+              "tags": ["prompt engineering", "optimization", "llm"]
+            },
+            {
+              "id": "red-teaming",
+              "title": "Red Teaming",
+              "description": "Adversarially probe an AI system for failures, jailbreaks, and edge cases",
+              "file": "ai-ops/red-teaming.md",
+              "tags": ["red team", "safety", "adversarial", "testing"]
             }
           ]
         }
@@ -197,27 +353,84 @@
       "icon": "zap",
       "color": "#2dd4bf",
       "primary": true,
-      "description": "Reusable agent skills and cognitive tools",
+      "description": "Reusable agent skills for Claude Code, Codex, and general AI workflows",
       "categories": [
         {
-          "id": "research",
-          "name": "Research",
-          "icon": "search",
-          "color": "#2dd4bf",
+          "id": "claude-code",
+          "name": "Claude Code",
+          "icon": "terminal",
+          "color": "#f97316",
           "items": [
             {
-              "id": "deep-research",
-              "title": "Deep Research",
-              "description": "Multi-source research with structured synthesis",
-              "file": "research/deep-research.md",
-              "tags": ["research", "web", "synthesis"]
+              "id": "claude-init",
+              "title": "Init CLAUDE.md",
+              "description": "Bootstrap a CLAUDE.md file with project conventions and agent guidance",
+              "file": "claude-code/init.md",
+              "tags": ["claude code", "init", "setup"]
             },
             {
-              "id": "summarise",
-              "title": "Summarise",
-              "description": "Condense any content into a structured TL;DR",
-              "file": "research/summarise.md",
-              "tags": ["summary", "tl;dr", "content"]
+              "id": "claude-pr-review",
+              "title": "PR Review (Claude Code)",
+              "description": "Run a full multi-angle PR review using Claude Code slash command pattern",
+              "file": "claude-code/pr-review.md",
+              "tags": ["claude code", "pr", "review"]
+            },
+            {
+              "id": "claude-security-review",
+              "title": "Security Review",
+              "description": "Run /security-review to audit all changed code on the current branch",
+              "file": "claude-code/security-review.md",
+              "tags": ["claude code", "security", "audit"]
+            },
+            {
+              "id": "claude-hooks",
+              "title": "Hooks Configuration",
+              "description": "Configure pre/post tool-call hooks to automate repetitive tasks",
+              "file": "claude-code/hooks.md",
+              "tags": ["claude code", "hooks", "automation"]
+            },
+            {
+              "id": "claude-mcp",
+              "title": "MCP Server Patterns",
+              "description": "Connect MCP servers for databases, APIs, and external tools",
+              "file": "claude-code/mcp.md",
+              "tags": ["claude code", "mcp", "tools", "integration"]
+            }
+          ]
+        },
+        {
+          "id": "codex",
+          "name": "Codex",
+          "icon": "code",
+          "color": "#10b981",
+          "items": [
+            {
+              "id": "codex-agent",
+              "title": "Codex Agent Pattern",
+              "description": "Structure tasks for Codex with clear context, constraints, and output format",
+              "file": "codex/codex-agent.md",
+              "tags": ["codex", "openai", "agent"]
+            },
+            {
+              "id": "codex-file-edit",
+              "title": "Codex File Editing",
+              "description": "Best practices for directing Codex to make precise, minimal file edits",
+              "file": "codex/file-edit.md",
+              "tags": ["codex", "editing", "diff"]
+            },
+            {
+              "id": "codex-workflow",
+              "title": "Codex Workflow Patterns",
+              "description": "Multi-step Codex workflows: read → plan → implement → verify",
+              "file": "codex/workflow.md",
+              "tags": ["codex", "workflow", "multi-step"]
+            },
+            {
+              "id": "codex-context",
+              "title": "Codex Context Priming",
+              "description": "How to prime Codex with codebase context for accurate completions",
+              "file": "codex/context-priming.md",
+              "tags": ["codex", "context", "prompting"]
             }
           ]
         },
@@ -240,6 +453,28 @@
               "description": "Structured pull request review skill",
               "file": "coding/pr-review.md",
               "tags": ["pr", "review", "git"]
+            }
+          ]
+        },
+        {
+          "id": "research",
+          "name": "Research",
+          "icon": "search",
+          "color": "#2dd4bf",
+          "items": [
+            {
+              "id": "deep-research",
+              "title": "Deep Research",
+              "description": "Multi-source research with structured synthesis",
+              "file": "research/deep-research.md",
+              "tags": ["research", "web", "synthesis"]
+            },
+            {
+              "id": "summarise",
+              "title": "Summarise",
+              "description": "Condense any content into a structured TL;DR",
+              "file": "research/summarise.md",
+              "tags": ["summary", "tl;dr", "content"]
             }
           ]
         },
@@ -284,6 +519,222 @@
               "description": "Extract and validate structured JSON from unstructured text",
               "file": "tools/structured-output.md",
               "tags": ["json", "extraction", "schema"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "commands",
+      "name": "AI Commands",
+      "icon": "terminal",
+      "color": "#f97316",
+      "primary": true,
+      "description": "Ultimate reference for Claude Code and Codex commands, tips, and prompting techniques",
+      "categories": [
+        {
+          "id": "claude-code-commands",
+          "name": "Claude Code",
+          "icon": "terminal",
+          "color": "#f97316",
+          "items": [
+            {
+              "id": "slash-commands",
+              "title": "Slash Commands",
+              "description": "Every built-in slash command with examples and use cases",
+              "file": "claude-code/slash-commands.md",
+              "tags": ["claude code", "slash commands", "cli"]
+            },
+            {
+              "id": "keyboard-shortcuts",
+              "title": "Keyboard Shortcuts",
+              "description": "Full shortcut reference for CLI and VS Code / JetBrains extensions",
+              "file": "claude-code/keyboard-shortcuts.md",
+              "tags": ["claude code", "shortcuts", "keyboard"]
+            },
+            {
+              "id": "hooks-examples",
+              "title": "Hooks Examples",
+              "description": "Ready-to-use hooks for linting, testing, notifications, and automation",
+              "file": "claude-code/hooks-examples.md",
+              "tags": ["claude code", "hooks", "automation"]
+            },
+            {
+              "id": "mcp-setup",
+              "title": "MCP Setup Guide",
+              "description": "Step-by-step MCP server setup for databases, GitHub, Slack, and more",
+              "file": "claude-code/mcp-setup.md",
+              "tags": ["claude code", "mcp", "setup", "integration"]
+            },
+            {
+              "id": "settings-guide",
+              "title": "Settings & Permissions",
+              "description": "Master settings.json, permission modes, allow/deny rules, and env vars",
+              "file": "claude-code/settings-guide.md",
+              "tags": ["claude code", "settings", "permissions", "config"]
+            },
+            {
+              "id": "best-practices",
+              "title": "Best Practices",
+              "description": "Power-user tips: CLAUDE.md, memory, worktrees, parallel agents, and more",
+              "file": "claude-code/best-practices.md",
+              "tags": ["claude code", "best practices", "tips", "power user"]
+            },
+            {
+              "id": "subagents",
+              "title": "Subagents & Parallel Work",
+              "description": "Spawn specialised subagents, run tasks in parallel with worktrees",
+              "file": "claude-code/subagents.md",
+              "tags": ["claude code", "subagents", "parallel", "agents"]
+            },
+            {
+              "id": "memory-system",
+              "title": "Memory System",
+              "description": "Persist knowledge across sessions with the file-based memory system",
+              "file": "claude-code/memory-system.md",
+              "tags": ["claude code", "memory", "persistence", "context"]
+            },
+            {
+              "id": "custom-commands",
+              "title": "Custom Slash Commands",
+              "description": "Build your own /commands for repeatable workflows and team standards",
+              "file": "claude-code/custom-commands.md",
+              "tags": ["claude code", "custom commands", "workflow", "automation"]
+            },
+            {
+              "id": "extended-thinking",
+              "title": "Extended Thinking",
+              "description": "Unlock deep reasoning for hard architectural and debugging problems",
+              "file": "claude-code/extended-thinking.md",
+              "tags": ["claude code", "thinking", "reasoning", "hard problems"]
+            },
+            {
+              "id": "context-window",
+              "title": "Context & Compaction",
+              "description": "Manage context limits, use /compact, and structure long sessions",
+              "file": "claude-code/context-window.md",
+              "tags": ["claude code", "context", "compact", "tokens"]
+            },
+            {
+              "id": "debugging-sessions",
+              "title": "Debugging Sessions",
+              "description": "Recover from stuck agents, wrong directions, and unexpected edits",
+              "file": "claude-code/debugging-sessions.md",
+              "tags": ["claude code", "debugging", "recovery", "mistakes"]
+            },
+            {
+              "id": "claude-md-reference",
+              "title": "CLAUDE.md Reference",
+              "description": "Full reference for writing effective CLAUDE.md files at every scope",
+              "file": "claude-code/claude-md-reference.md",
+              "tags": ["claude code", "claude.md", "context", "configuration"]
+            }
+          ]
+        },
+        {
+          "id": "codex-commands",
+          "name": "Codex",
+          "icon": "code",
+          "color": "#10b981",
+          "items": [
+            {
+              "id": "codex-cli",
+              "title": "Codex CLI Reference",
+              "description": "Complete CLI flags, modes, environment variables, and exit codes",
+              "file": "codex/cli-reference.md",
+              "tags": ["codex", "cli", "reference"]
+            },
+            {
+              "id": "codex-approval-modes",
+              "title": "Approval Modes",
+              "description": "Suggest, auto-edit, and full-auto — what each does and when to use it",
+              "file": "codex/approval-modes.md",
+              "tags": ["codex", "approval", "autonomous"]
+            },
+            {
+              "id": "codex-best-practices",
+              "title": "Codex Best Practices",
+              "description": "Task structure, AGENTS.md patterns, and prompting for best results",
+              "file": "codex/best-practices.md",
+              "tags": ["codex", "best practices", "prompting"]
+            },
+            {
+              "id": "codex-vs-claude",
+              "title": "Codex vs Claude Code",
+              "description": "Side-by-side comparison — when to reach for each tool",
+              "file": "codex/vs-claude-code.md",
+              "tags": ["codex", "claude code", "comparison"]
+            },
+            {
+              "id": "agents-md",
+              "title": "AGENTS.md Reference",
+              "description": "Full reference for writing the AGENTS.md / CODEX.md context file",
+              "file": "codex/agents-md.md",
+              "tags": ["codex", "agents.md", "context", "configuration"]
+            },
+            {
+              "id": "codex-sandbox",
+              "title": "Sandbox & Environment",
+              "description": "How the Codex sandbox works: network, filesystem, and tool access",
+              "file": "codex/sandbox.md",
+              "tags": ["codex", "sandbox", "security", "environment"]
+            },
+            {
+              "id": "codex-ci",
+              "title": "CI/CD Integration",
+              "description": "Run Codex headlessly in GitHub Actions, GitLab CI, and scripts",
+              "file": "codex/ci-integration.md",
+              "tags": ["codex", "ci/cd", "automation", "github actions"]
+            },
+            {
+              "id": "codex-scripting",
+              "title": "Scripting & Batch Tasks",
+              "description": "Automate bulk code tasks by scripting Codex across files and repos",
+              "file": "codex/scripting.md",
+              "tags": ["codex", "scripting", "batch", "automation"]
+            }
+          ]
+        },
+        {
+          "id": "techniques",
+          "name": "Prompting Techniques",
+          "icon": "zap",
+          "color": "#a78bfa",
+          "items": [
+            {
+              "id": "chain-of-thought",
+              "title": "Chain of Thought (CoT)",
+              "description": "Elicit step-by-step reasoning for maths, logic, and complex problems",
+              "file": "techniques/chain-of-thought.md",
+              "tags": ["cot", "reasoning", "prompting"]
+            },
+            {
+              "id": "few-shot",
+              "title": "Few-Shot Prompting",
+              "description": "Design high-signal examples that guide model behaviour",
+              "file": "techniques/few-shot.md",
+              "tags": ["few-shot", "examples", "prompting"]
+            },
+            {
+              "id": "react-pattern",
+              "title": "ReAct Pattern",
+              "description": "Reason + Act loop for grounded tool use and verifiable answers",
+              "file": "techniques/react-pattern.md",
+              "tags": ["react", "tool use", "agent", "reasoning"]
+            },
+            {
+              "id": "meta-prompting",
+              "title": "Meta-Prompting",
+              "description": "Use the model to generate or refine its own prompts",
+              "file": "techniques/meta-prompting.md",
+              "tags": ["meta", "self-improvement", "prompt engineering"]
+            },
+            {
+              "id": "structured-thinking",
+              "title": "Structured Thinking",
+              "description": "XML tags, scratchpads, and extended thinking for deeper reasoning",
+              "file": "techniques/structured-thinking.md",
+              "tags": ["thinking", "xml", "extended thinking", "claude"]
             }
           ]
         }
@@ -346,6 +797,35 @@
               "tags": ["git", "pr", "automation"]
             }
           ]
+        },
+        {
+          "id": "devops",
+          "name": "DevOps",
+          "icon": "cpu",
+          "color": "#34d399",
+          "items": [
+            {
+              "id": "ci-cd-pipeline",
+              "title": "CI/CD Pipeline Design",
+              "description": "Design a full CI/CD pipeline with build, test, and deploy stages",
+              "file": "devops/ci-cd-pipeline.md",
+              "tags": ["ci/cd", "devops", "github actions"]
+            },
+            {
+              "id": "infra-as-code",
+              "title": "Infrastructure as Code",
+              "description": "Generate Terraform or Pulumi infra with best-practice patterns",
+              "file": "devops/infra-as-code.md",
+              "tags": ["terraform", "pulumi", "iac", "devops"]
+            },
+            {
+              "id": "incident-response",
+              "title": "Incident Response",
+              "description": "Structured workflow for diagnosing, mitigating, and resolving incidents",
+              "file": "devops/incident-response.md",
+              "tags": ["incident", "sre", "on-call", "runbook"]
+            }
+          ]
         }
       ]
     },
@@ -397,6 +877,28 @@
               "description": "Evaluate the quality and efficiency of an agent's tool calls",
               "file": "agents/tool-usage.md",
               "tags": ["agent", "tools", "efficiency"]
+            }
+          ]
+        },
+        {
+          "id": "safety",
+          "name": "Safety Evals",
+          "icon": "zap",
+          "color": "#f87171",
+          "items": [
+            {
+              "id": "prompt-injection",
+              "title": "Prompt Injection Eval",
+              "description": "Test a system for prompt injection and jailbreak vulnerabilities",
+              "file": "safety/prompt-injection.md",
+              "tags": ["safety", "injection", "adversarial"]
+            },
+            {
+              "id": "alignment-check",
+              "title": "Alignment & Policy Check",
+              "description": "Verify model outputs comply with usage policy and content guidelines",
+              "file": "safety/alignment-check.md",
+              "tags": ["safety", "alignment", "policy", "content"]
             }
           ]
         }

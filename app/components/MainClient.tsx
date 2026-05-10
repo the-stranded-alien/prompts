@@ -253,7 +253,7 @@ export default function MainClient({ sections }: MainClientProps) {
             {[
               { label: "GitHub",    href: "https://github.com/the-stranded-alien",      icon: "github" },
               { label: "LinkedIn",  href: "https://www.linkedin.com/in/sahilgupta1611", icon: "linkedin" },
-              { label: "Portfolio", href: "https://portfolio.guptasahil.in/",           icon: "globe" },
+              { label: "Portfolio", href: "https://guptasahil.in",                         icon: "globe" },
               { label: "Blogs",     href: "https://blogs.guptasahil.in/",               icon: "pen" },
             ].map(({ label, href, icon }) => (
               <a key={label} href={href} target="_blank" rel="noopener noreferrer"
