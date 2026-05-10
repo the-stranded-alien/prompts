@@ -42,8 +42,7 @@ export default function MainClient({ sections }: MainClientProps) {
   const [selection, setSelection] = useState<Selection | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const primarySections   = sections.filter((s) => s.primary);
-  const secondarySections = sections.filter((s) => !s.primary);
+  const primarySections = sections.filter((s) => s.primary);
 
   const activeSection = sections.find((s) => s.id === activeSectionId) ?? sections[0];
 
@@ -117,87 +116,88 @@ export default function MainClient({ sections }: MainClientProps) {
           </div>
         </div>
 
-        {/* Section switcher */}
-        <div className="flex-none px-3 py-2.5 border-b border-[--border]">
-          {/* Primary tabs */}
-          <div
-            className="flex gap-1 p-1 rounded-xl border border-[--border]"
-            style={{ background: "var(--bg-elevated)" }}
-          >
-            {primarySections.map((s) => {
+        {/* Section switcher — all sections stacked */}
+        <div className="flex-none px-3 py-2 border-b border-[--border]">
+          <div className="flex flex-col gap-1">
+            {sections.map((s) => {
               const Icon = getIconByName(s.icon);
               const isActive = s.id === activeSectionId;
+              const count = s.categories.reduce((sum, c) => sum + c.items.length, 0);
               return (
                 <button
                   key={s.id}
                   onClick={() => handleSelectSection(s.id)}
-                  className={`flex-1 min-w-0 overflow-hidden flex items-center justify-center gap-1.5
-                    py-1.5 px-2 rounded-lg text-[11px] font-bold transition-all duration-200 ${
-                    isActive
-                      ? "text-[--text-primary] shadow-sm"
-                      : "text-[--text-muted] hover:text-[--text-secondary]"
-                  }`}
-                  style={isActive ? { background: "var(--bg-sidebar)" } : {}}
+                  className="w-full flex items-center gap-3 px-2.5 py-2.5 rounded-xl
+                    transition-all duration-200 text-left relative group"
+                  style={isActive ? {
+                    background: `${s.color}14`,
+                    border: `1px solid ${s.color}35`,
+                    boxShadow: `0 2px 14px ${s.color}14`,
+                  } : {
+                    background: "transparent",
+                    border: "1px solid transparent",
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!isActive)
+                      (e.currentTarget as HTMLButtonElement).style.background = `${s.color}08`;
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isActive)
+                      (e.currentTarget as HTMLButtonElement).style.background = "transparent";
+                  }}
                 >
-                  <span style={isActive ? { color: s.color } : {}} className="shrink-0">
-                    <Icon className="w-3.5 h-3.5" />
+                  {/* Left accent bar */}
+                  <span
+                    className="absolute left-0 top-3 bottom-3 w-[3px] rounded-full transition-opacity duration-200"
+                    style={{ background: s.color, opacity: isActive ? 1 : 0 }}
+                  />
+
+                  {/* Icon box */}
+                  <span
+                    className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 transition-all duration-200"
+                    style={isActive ? {
+                      background: `${s.color}22`,
+                      boxShadow: `0 0 12px ${s.color}28`,
+                      color: s.color,
+                    } : {
+                      background: "var(--bg-elevated)",
+                      color: "var(--text-muted)",
+                    }}
+                  >
+                    <Icon className="w-[18px] h-[18px]" />
                   </span>
-                  <span className="truncate">{s.name}</span>
+
+                  {/* Label */}
+                  <div className="flex-1 min-w-0">
+                    <div
+                      className="text-[13px] font-bold leading-tight truncate"
+                      style={{ color: isActive ? "var(--text-primary)" : "var(--text-muted)" }}
+                    >
+                      {s.name}
+                    </div>
+                    <div
+                      className="text-[10px] font-medium mt-0.5"
+                      style={{ color: isActive ? s.color : "var(--text-muted)", opacity: isActive ? 1 : 0.6 }}
+                    >
+                      {count} items
+                    </div>
+                  </div>
+
+                  {/* Count pill */}
+                  <span
+                    className="shrink-0 text-[10px] font-black font-mono tabular-nums px-2 py-1 rounded-lg"
+                    style={{
+                      background: isActive ? `${s.color}20` : "var(--bg-elevated)",
+                      color: isActive ? s.color : "var(--text-muted)",
+                      border: `1px solid ${isActive ? `${s.color}30` : "var(--border)"}`,
+                    }}
+                  >
+                    {count}
+                  </span>
                 </button>
               );
             })}
           </div>
-
-          {/* Secondary sections — always visible, stacked */}
-          {secondarySections.length > 0 && (
-            <div className="mt-2 flex flex-col gap-1">
-              {secondarySections.map((s) => {
-                const Icon = getIconByName(s.icon);
-                const isActive = s.id === activeSectionId;
-                const count = s.categories.reduce((sum, c) => sum + c.items.length, 0);
-                return (
-                  <button
-                    key={s.id}
-                    onClick={() => handleSelectSection(s.id)}
-                    className="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-[11px]
-                      font-semibold transition-all duration-150 border"
-                    style={isActive ? {
-                      background: `${s.color}0e`,
-                      borderColor: `${s.color}28`,
-                      color: "var(--text-primary)",
-                    } : {
-                      background: "transparent",
-                      borderColor: "var(--border)",
-                      color: "var(--text-muted)",
-                    }}
-                    onMouseEnter={(e) => {
-                      if (!isActive) {
-                        (e.currentTarget as HTMLButtonElement).style.borderColor = "var(--border-hover)";
-                        (e.currentTarget as HTMLButtonElement).style.color = "var(--text-secondary)";
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      if (!isActive) {
-                        (e.currentTarget as HTMLButtonElement).style.borderColor = "var(--border)";
-                        (e.currentTarget as HTMLButtonElement).style.color = "var(--text-muted)";
-                      }
-                    }}
-                  >
-                    <span style={{ color: isActive ? s.color : "inherit" }} className="shrink-0">
-                      <Icon className="w-3.5 h-3.5" />
-                    </span>
-                    <span className="flex-1 text-left">{s.name}</span>
-                    <span
-                      className="text-[9px] font-mono tabular-nums px-1.5 py-0.5 rounded-full shrink-0"
-                      style={{ background: `${s.color}14`, color: s.color }}
-                    >
-                      {count}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-          )}
         </div>
 
         {/* Search */}
